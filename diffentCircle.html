@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幾何魔法教室：鋪色部分的周長都一樣長嗎？</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts Noto Sans TC 與 Fredoka 增添童趣與清晰度 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f0f7ff;
+            background-image: radial-gradient(#dbeafe 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            color: #1e293b;
+        }
+        .num-font {
+            font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+        }
+        /* 平滑的 SVG 變形過渡效果 */
+        .arc-piece {
+            transition: transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1), stroke-width 0.3s ease;
+            transform-box: fill-box;
+        }
+        .ant-dot {
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35));
+        }
+        @keyframes pulse-gentle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        .animate-pulse-gentle {
+            animation: pulse-gentle 2.2s infinite ease-in-out;
+        }
+        /* 自訂捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #93c5fd;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <!-- 頂部導覽與題目看板 -->
+    <header class="bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 text-white shadow-lg rounded-b-3xl mb-8">
+        <div class="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold mb-2">
+                        <span>📐 六年級數學・圓周長挑戰</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-black tracking-wide leading-snug">
+                        想想看，下面各圖鋪色部分的周長都一樣長嗎？為什麼？
+                    </h1>
+                </div>
+                <!-- 全域魔法操作按鈕 -->
+                <div class="flex flex-wrap gap-2 shrink-0">
+                    <button id="btn-assemble-all" onclick="toggleAssembleAll()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-black px-5 py-3 rounded-2xl shadow-md transition transform active:scale-95 flex items-center gap-2 cursor-pointer">
+                        <span class="text-xl">✨</span>
+                        <span id="btn-assemble-all-text">一鍵魔法重組全部</span>
+                    </button>
+                    <button id="btn-ant-all" onclick="toggleAntWalkAll()" class="bg-white/95 hover:bg-white text-blue-600 font-bold px-4 py-3 rounded-2xl shadow-md transition transform active:scale-95 flex items-center gap-2 cursor-pointer">
+                        <span class="text-xl">🐜</span>
+                        <span id="btn-ant-all-text">小螞蟻走邊界</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 老師小叮嚀橫幅 -->
+            <div class="mt-4 bg-white/15 backdrop-blur-md border border-white/25 rounded-2xl p-3.5 flex items-start sm:items-center gap-3 text-sm sm:text-base">
+                <span class="text-2xl shrink-0">💡</span>
+                <p class="leading-relaxed">
+                    <strong>解題秘訣：</strong>「<strong>周長</strong>」就是圖形<strong>最外圍那一圈邊界</strong>的總長度（裡面的虛線不算喔！）。點擊下方各圖的<strong>「動畫拆解重組」</strong>，看看圓弧會變成什麼魔法！
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要互動學習區：三張圖形卡片 -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- ================= 圖 ① 卡片 ================= -->
+            <section class="bg-white rounded-3xl shadow-xl border-2 border-sky-100 overflow-hidden flex flex-col justify-between transition hover:border-sky-300">
+                <div>
+                    <!-- 卡片標題列 -->
+                    <div class="bg-sky-50 px-5 py-4 border-b border-sky-100 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-9 h-9 rounded-full bg-sky-500 text-white font-black text-xl flex items-center justify-center shadow-sm num-font">1</span>
+                            <h2 class="text-lg font-extrabold text-slate-800">圖 ①：正方形裡的圓</h2>
+                        </div>
+                        <span class="text-xs font-bold bg-sky-200/70 text-sky-800 px-2.5 py-1 rounded-full">基準對照組</span>
+                    </div>
+
+                    <!-- 互動 SVG 畫布區 -->
+                    <div class="p-4 bg-gradient-to-b from-white to-slate-50 flex flex-col items-center">
+                        <div class="w-full max-w-[290px] aspect-square relative">
+                            <svg id="svg-1" viewBox="0 0 260 260" class="w-full h-full overflow-visible">
+                                <!-- 30cm 標示線 (上方) -->
+                                <path d="M 55 42 Q 130 22 205 42" fill="none" stroke="#64748b" stroke-width="1.5"/>
+                                <rect x="102" y="18" width="56" height="22" rx="6" fill="#f8fafc"/>
+                                <text x="130" y="34" text-anchor="middle" class="text-sm font-bold fill-slate-700 num-font">30 cm</text>
+
+                                <!-- 30cm 標示線 (右側) -->
+                                <path d="M 218 55 Q 238 130 218 205" fill="none" stroke="#64748b" stroke-width="1.5"/>
+                                <rect x="206" y="119" width="52" height="22" rx="6" fill="#f8fafc"/>
+                                <text x="232" y="135" text-anchor="middle" class="text-sm font-bold fill-slate-700 num-font">30 cm</text>
+
+                                <!-- 虛線外框正方形 (55,55 到 205,205，邊長 150px 代表 30cm) -->
+                                <rect x="55" y="55" width="150" height="150" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="5,4"/>
+                                <!-- 四個直角記號 -->
+                                <path d="M 55 65 L 65 65 L 65 55 M 195 55 L 195 65 L 205 65 M 55 195 L 65 195 L 65 205 M 195 205 L 195 195 L 205 195" fill="none" stroke="#475569" stroke-width="1.5"/>
+
+                                <!-- 鋪色圓形底色 -->
+                                <circle cx="130" cy="130" r="75" fill="#bae6fd" fill-opacity="0.75"/>
+
+                                <!-- 直徑輔助線 (動畫時顯示) -->
+                                <g id="fig1-diameter-guide" class="opacity-0 transition-opacity duration-500">
+                                    <line x1="55" y1="130" x2="205" y2="130" stroke="#e11d48" stroke-width="2.5" stroke-dasharray="6,4"/>
+                                    <rect x="85" y="106" width="90" height="22" rx="8" fill="#ffe4e6" stroke="#fda4af" stroke-width="1"/>
+                                    <text x="130" y="121" text-anchor="middle" class="text-xs font-extrabold fill-rose-700">直徑 = 30 cm</text>
+                                </g>
+
+                                <!-- 圓心黑點 -->
+                                <circle cx="130" cy="130" r="3.5" fill="#1e293b"/>
+
+                                <!-- 4段彩色圓弧邊界（為了與圖2、圖3做視覺呼應，平常為深色實線，點擊觀察時變彩色） -->
+                                <path id="fig1-arc-1" d="M 130 55 A 75 75 0 0 1 205 130" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" class="transition-colors duration-500"/>
+                                <path id="fig1-arc-2" d="M 205 130 A 75 75 0 0 1 130 205" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" class="transition-colors duration-500"/>
+                                <path id="fig1-arc-3" d="M 130 205 A 75 75 0 0 1 55 130" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" class="transition-colors duration-500"/>
+                                <path id="fig1-arc-4" d="M 55 130 A 75 75 0 0 1 130 55" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" class="transition-colors duration-500"/>
+
+                                <!-- 小螞蟻路徑與角色 -->
+                                <path id="ant-path-1" d="M 130 55 A 75 75 0 1 1 129.9 55" fill="none" stroke="none"/>
+                                <g id="ant-1" class="hidden ant-dot">
+                                    <circle cx="0" cy="0" r="7" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
+                                    <text x="0" y="3.5" text-anchor="middle" font-size="9">🐜</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- 圖①專屬互動按鈕 -->
+                        <div class="flex gap-2 w-full mt-2">
+                            <button id="btn-fig1-highlight" onclick="toggleFig1Highlight()" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2.5 px-3 rounded-xl shadow transition transform active:scale-95 text-sm flex items-center justify-center gap-1.5 cursor-pointer">
+                                <span>🔍</span>
+                                <span id="btn-fig1-text">顯示直徑與 4 等分弧</span>
+                            </button>
+                            <button onclick="toggleAntSingle(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl transition text-sm cursor-pointer" title="讓小螞蟻沿著周長走一圈">
+                                🐜 走一圈
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 圖①白話解說區 -->
+                <div class="p-5 bg-sky-50/60 border-t border-sky-100 space-y-2.5">
+                    <div class="flex items-center gap-2 text-sky-900 font-bold text-base">
+                        <span>👀 觀察重點：</span>
+                    </div>
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        這個圓剛好頂到正方形的四條邊，所以圓的<strong>直徑就是 30 公分</strong>（半徑 15 公分）。
+                    </p>
+                    <div class="bg-white rounded-xl p-3 border border-sky-200 text-sm">
+                        <div class="font-bold text-sky-700 mb-1">📏 周長算式：</div>
+                        <div class="text-slate-800 font-medium">
+                            直徑 30 cm 的 <strong>1 個完整圓周長</strong><br>
+                            <span class="text-sky-600 font-bold num-font">= 30 × 3.14 = 94.2 (cm)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= 圖 ② 卡片 ================= -->
+            <section class="bg-white rounded-3xl shadow-xl border-2 border-amber-100 overflow-hidden flex flex-col justify-between transition hover:border-amber-300">
+                <div>
+                    <!-- 卡片標題列 -->
+                    <div class="bg-amber-50 px-5 py-4 border-b border-amber-100 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-9 h-9 rounded-full bg-amber-500 text-white font-black text-xl flex items-center justify-center shadow-sm num-font">2</span>
+                            <h2 class="text-lg font-extrabold text-slate-800">圖 ②：四角星形凹弧</h2>
+                        </div>
+                        <span class="text-xs font-bold bg-amber-200/80 text-amber-900 px-2.5 py-1 rounded-full">4個 1/4 圓弧</span>
+                    </div>
+
+                    <!-- 互動 SVG 畫布區 -->
+                    <div class="p-4 bg-gradient-to-b from-white to-slate-50 flex flex-col items-center">
+                        <div class="w-full max-w-[290px] aspect-square relative">
+                            <svg id="svg-2" viewBox="0 0 260 260" class="w-full h-full overflow-visible">
+                                <!-- 30cm 標示線 (上方) -->
+                                <path d="M 55 42 Q 130 22 205 42" fill="none" stroke="#64748b" stroke-width="1.5"/>
+                                <rect x="102" y="18" width="56" height="22" rx="6" fill="#f8fafc"/>
+                                <text x="130" y="34" text-anchor="middle" class="text-sm font-bold fill-slate-700 num-font">30 cm</text>
+
+                                <!-- 30cm 標示線 (右側) -->
+                                <path d="M 218 55 Q 238 130 218 205" fill="none" stroke="#64748b" stroke-width="1.5"/>
+                                <rect x="206" y="119" width="52" height="22" rx="6" fill="#f8fafc"/>
+                                <text x="232" y="135" text-anchor="middle" class="text-sm font-bold fill-slate-700 num-font">30 cm</text>
+
+                                <!-- 虛線外框正方形 -->
+                                <rect x="55" y="55" width="150" height="150" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="5,4"/>
+                                <!-- 四個直角記號與圓心黑點 -->
+                                <path d="M 55 65 L 65 65 L 65 55 M 195 55 L 195 65 L 205 65 M 55 195 L 65 195 L 65 205 M 195 205 L 195 195 L 205 195" fill="none" stroke="#475569" stroke-width="1.5"/>
+                                <circle cx="55" cy="55" r="3" fill="#1e293b"/>
+                                <circle cx="205" cy="55" r="3" fill="#1e293b"/>
+                                <circle cx="55" cy="205" r="3" fill="#1e293b"/>
+                                <circle cx="205" cy="205" r="3" fill="#1e293b"/>
+
+                                <!-- 重組目標參考虛線圓 (動畫時顯示) -->
+                                <g id="fig2-target-circle" class="opacity-0 transition-opacity duration-500">
+                                    <circle cx="130" cy="130" r="75" fill="#fef3c7" fill-opacity="0.5" stroke="#d97706" stroke-width="2" stroke-dasharray="6,4"/>
+                                    <text x="130" y="135" text-anchor="middle" class="text-xs font-black fill-amber-800">拚成 1 個完整圓！</text>
+                                </g>
+
+                                <!-- 原本鋪色四角星底色 (重組時淡出) -->
+                                <path id="fig2-fill" d="M 130 55 A 75 75 0 0 0 205 130 A 75 75 0 0 0 130 205 A 75 75 0 0 0 55 130 A 75 75 0 0 0 130 55 Z" fill="#fed7aa" fill-opacity="0.85" class="transition-opacity duration-500"/>
+
+                                <!--
+                                    圖② 的四條 1/4 圓弧 (半徑 75px = 15cm)：
+                                    1. 右上凹弧 (圓心205,55)：從 (130,55) 到 (205,130)，在圓心左下側。
+                                       平移 (-75, +75) 後，圓心移到 (130,130)，變成圓的「左下 1/4 圓弧」！
+                                    2. 右下凹弧 (圓心205,205)：從 (205,130) 到 (130,205)，在圓心左上側。
+                                       平移 (-75, -75) 後，圓心移到 (130,130)，變成圓的「左上 1/4 圓弧」！
+                                    3. 左下凹弧 (圓心55,205)：從 (130,205) 到 (55,130)，在圓心右上側。
+                                       平移 (+75, -75) 後，圓心移到 (130,130)，變成圓的「右上 1/4 圓弧」！
+                                    4. 左上凹弧 (圓心55,55)：從 (55,130) 到 (130,55)，在圓心右下側。
+                                       平移 (+75, +75) 後，圓心移到 (130,130)，變成圓的「右下 1/4 圓弧」！
+                                -->
+                                <path id="fig2-arc-tr" d="M 130 55 A 75 75 0 0 0 205 130" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+                                <path id="fig2-arc-br" d="M 205 130 A 75 75 0 0 0 130 205" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+                                <path id="fig2-arc-bl" d="M 130 205 A 75 75 0 0 0 55 130" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+                                <path id="fig2-arc-tl" d="M 55 130 A 75 75 0 0 0 130 55" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+
+                                <!-- 小螞蟻路徑與角色 -->
+                                <path id="ant-path-2" d="M 130 55 A 75 75 0 0 0 205 130 A 75 75 0 0 0 130 205 A 75 75 0 0 0 55 130 A 75 75 0 0 0 130 55" fill="none" stroke="none"/>
+                                <g id="ant-2" class="hidden ant-dot">
+                                    <circle cx="0" cy="0" r="7" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
+                                    <text x="0" y="3.5" text-anchor="middle" font-size="9">🐜</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- 圖②專屬互動按鈕 -->
+                        <div class="flex gap-2 w-full mt-2">
+                            <button id="btn-fig2-animate" onclick="toggleFig2Assemble()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-3 rounded-xl shadow transition transform active:scale-95 text-sm flex items-center justify-center gap-1.5 cursor-pointer">
+                                <span>🧩</span>
+                                <span id="btn-fig2-text">動畫拆解重組</span>
+                            </button>
+                            <button onclick="toggleAntSingle(2)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl transition text-sm cursor-pointer" title="讓小螞蟻沿著周長走一圈">
+                                🐜 走一圈
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 圖②白話解說區 -->
+                <div class="p-5 bg-amber-50/60 border-t border-amber-100 space-y-2.5">
+                    <div class="flex items-center gap-2 text-amber-900 font-bold text-base">
+                        <span>👀 觀察重點：</span>
+                    </div>
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        四個角各有一個半徑 15 公分的 <strong>1/4 圓弧</strong>（紅、藍、綠、橘）。把這 4 段圓弧向中間平移靠攏，剛好拼成 <strong>1 個完整的圓</strong>！
+                    </p>
+                    <div class="bg-white rounded-xl p-3 border border-amber-200 text-sm">
+                        <div class="font-bold text-amber-700 mb-1">📏 周長算式：</div>
+                        <div class="text-slate-800 font-medium">
+                            4 個 (1/4 圓弧) = <strong>1 個完整圓周長</strong><br>
+                            <span class="text-amber-600 font-bold num-font">= 30 × 3.14 = 94.2 (cm)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= 圖 ③ 卡片 ================= -->
+            <section class="bg-white rounded-3xl shadow-xl border-2 border-emerald-100 overflow-hidden flex flex-col justify-between transition hover:border-emerald-300">
+                <div>
+                    <!-- 卡片標題列 -->
+                    <div class="bg-emerald-50 px-5 py-4 border-b border-emerald-100 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-9 h-9 rounded-full bg-emerald-500 text-white font-black text-xl flex items-center justify-center shadow-sm num-font">3</span>
+                            <h2 class="text-lg font-extrabold text-slate-800">圖 ③：太極風車波浪</h2>
+                        </div>
+                        <span class="text-xs font-bold bg-emerald-200/80 text-emerald-900 px-2.5 py-1 rounded-full">2凸弧 + 2凹弧</span>
+                    </div>
+
+                    <!-- 互動 SVG 畫布區 -->
+                    <div class="p-4 bg-gradient-to-b from-white to-slate-50 flex flex-col items-center">
+                        <div class="w-full max-w-[290px] aspect-square relative">
+                            <svg id="svg-3" viewBox="0 0 260 260" class="w-full h-full overflow-visible">
+                                <!-- 30cm 標示線 (上方) -->
+                                <path d="M 55 42 Q 130 22 205 42" fill="none" stroke="#64748b" stroke-width="1.5"/>
+                                <rect x="102" y="18" width="56" height="22" rx="6" fill="#f8fafc"/>
+                                <text x="130" y="34" text-anchor="middle" class="text-sm font-bold fill-slate-700 num-font">30 cm</text>
+
+                                <!-- 30cm 標示線 (右側) -->
+                                <path d="M 218 55 Q 238 130 218 205" fill="none" stroke="#64748b" stroke-width="1.5"/>
+                                <rect x="206" y="119" width="52" height="22" rx="6" fill="#f8fafc"/>
+                                <text x="232" y="135" text-anchor="middle" class="text-sm font-bold fill-slate-700 num-font">30 cm</text>
+
+                                <!-- 虛線外框正方形 -->
+                                <rect x="55" y="55" width="150" height="150" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="5,4"/>
+                                <!-- 四角直角記號 -->
+                                <path d="M 55 65 L 65 65 L 65 55 M 195 55 L 195 65 L 205 65 M 55 195 L 65 195 L 65 205 M 195 205 L 195 195 L 205 195" fill="none" stroke="#475569" stroke-width="1.5"/>
+                                <!-- 右上、左下圓心黑點 -->
+                                <circle cx="205" cy="55" r="3" fill="#1e293b"/>
+                                <circle cx="55" cy="205" r="3" fill="#1e293b"/>
+
+                                <!-- 重組目標參考虛線圓 (動畫時顯示) -->
+                                <g id="fig3-target-circle" class="opacity-0 transition-opacity duration-500">
+                                    <circle cx="130" cy="130" r="75" fill="#d1fae5" fill-opacity="0.55" stroke="#059669" stroke-width="2" stroke-dasharray="6,4"/>
+                                    <text x="130" y="135" text-anchor="middle" class="text-xs font-black fill-emerald-800">也拼成 1 個完整圓！</text>
+                                </g>
+
+                                <!-- 原本鋪色底色 (重組時淡出) -->
+                                <path id="fig3-fill" d="M 55 130 A 75 75 0 0 1 130 55 A 75 75 0 0 0 205 130 A 75 75 0 0 1 130 205 A 75 75 0 0 0 55 130 Z" fill="#bbf7d0" fill-opacity="0.85" class="transition-opacity duration-500"/>
+
+                                <!-- 內部十字虛線與直角記號 (注意：虛線不是周長！) -->
+                                <g id="fig3-inner-dashed" class="transition-opacity duration-300">
+                                    <line x1="130" y1="55" x2="130" y2="205" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4"/>
+                                    <line x1="55" y1="130" x2="205" y2="130" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4"/>
+                                    <path d="M 122 130 L 122 122 L 130 122 M 138 130 L 138 138 L 130 138" fill="none" stroke="#475569" stroke-width="1.5"/>
+                                    <circle cx="130" cy="130" r="3" fill="#1e293b"/>
+                                </g>
+
+                                <!--
+                                    圖③ 的四條 1/4 圓弧 (半徑 75px = 15cm)：
+                                    1. 左上凸弧 (圓心130,130)：從 (55,130) 到 (130,55) -> 已經在目標圓的「左上 1/4」位置！不動！
+                                    2. 右下凸弧 (圓心130,130)：從 (205,130) 到 (130,205) -> 已經在目標圓的「右下 1/4」位置！不動！
+                                    3. 右上凹弧 (圓心205,55)：從 (130,55) 到 (205,130) -> 平移 (-75, +75) 變成目標圓的「左下 1/4」！
+                                    4. 左下凹弧 (圓心55,205)：從 (130,205) 到 (55,130) -> 平移 (+75, -75) 變成目標圓的「右上 1/4」！
+                                -->
+                                <path id="fig3-arc-tl" d="M 55 130 A 75 75 0 0 1 130 55" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+                                <path id="fig3-arc-br" d="M 205 130 A 75 75 0 0 1 130 205" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+                                <path id="fig3-arc-tr" d="M 130 55 A 75 75 0 0 0 205 130" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+                                <path id="fig3-arc-bl" d="M 130 205 A 75 75 0 0 0 55 130" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round" class="arc-piece"/>
+
+                                <!-- 小螞蟻路徑與角色 -->
+                                <path id="ant-path-3" d="M 55 130 A 75 75 0 0 1 130 55 A 75 75 0 0 0 205 130 A 75 75 0 0 1 130 205 A 75 75 0 0 0 55 130" fill="none" stroke="none"/>
+                                <g id="ant-3" class="hidden ant-dot">
+                                    <circle cx="0" cy="0" r="7" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
+                                    <text x="0" y="3.5" text-anchor="middle" font-size="9">🐜</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- 圖③專屬互動按鈕 -->
+                        <div class="flex gap-2 w-full mt-2">
+                            <button id="btn-fig3-animate" onclick="toggleFig3Assemble()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-3 rounded-xl shadow transition transform active:scale-95 text-sm flex items-center justify-center gap-1.5 cursor-pointer">
+                                <span>🧩</span>
+                                <span id="btn-fig3-text">動畫拆解重組</span>
+                            </button>
+                            <button onclick="toggleAntSingle(3)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl transition text-sm cursor-pointer" title="讓小螞蟻沿著周長走一圈">
+                                🐜 走一圈
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 圖③白話解說區 -->
+                <div class="p-5 bg-emerald-50/60 border-t border-emerald-100 space-y-2.5">
+                    <div class="flex items-center gap-2 text-emerald-900 font-bold text-base">
+                        <span>⚠️ 小心陷阱：</span>
+                    </div>
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        中間的十字<strong>虛線不是邊界</strong>喔！真正的周長只有外圍 <strong>4 段 1/4 圓弧</strong>（2 段向外凸 + 2 段向內凹），移動凹弧後一樣拼成 <strong>1 個完整的圓</strong>！
+                    </p>
+                    <div class="bg-white rounded-xl p-3 border border-emerald-200 text-sm">
+                        <div class="font-bold text-emerald-700 mb-1">📏 周長算式：</div>
+                        <div class="text-slate-800 font-medium">
+                            4 個 (1/4 圓弧) = <strong>1 個完整圓周長</strong><br>
+                            <span class="text-emerald-600 font-bold num-font">= 30 × 3.14 = 94.2 (cm)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= 總結解答與隨堂小挑戰 ================= -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- 左側：標準作答區 (佔 7 欄) -->
+            <section class="lg:col-span-7 bg-white rounded-3xl shadow-xl border-2 border-indigo-100 p-6 sm:p-7 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-3xl">🏆</span>
+                            <h2 class="text-xl sm:text-2xl font-black text-indigo-950">解密時間：周長都一樣長嗎？</h2>
+                        </div>
+                        <button id="btn-reveal-answer" onclick="toggleAnswerBox()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-4 py-2 rounded-xl shadow transition cursor-pointer">
+                            顯示完整解答
+                        </button>
+                    </div>
+
+                    <div id="answer-box" class="space-y-4">
+                        <div class="bg-gradient-to-r from-indigo-50 to-sky-50 border-l-4 border-indigo-500 p-4 rounded-r-2xl">
+                            <p class="text-lg sm:text-xl font-black text-indigo-900 mb-1">
+                                答：都一樣長！（都是 <span class="num-font text-rose-600">94.2</span> 公分）
+                            </p>
+                            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                                <strong>為什麼呢？</strong><br>
+                                因為這三個圖形鋪色部分的周長，全部都是由 <strong>4 個半徑 15 公分的「1/4 圓弧」</strong>組成的，合起來都剛好等於 <strong>1 個直徑 30 公分的完整圓周長</strong>（<span class="num-font font-bold">30 × 3.14 = 94.2</span> 公分）。
+                            </p>
+                        </div>
+
+                        <!-- 視覺對比小圖示 -->
+                        <div class="grid grid-cols-3 gap-3 text-center pt-1">
+                            <div class="bg-sky-50 rounded-2xl p-3 border border-sky-100">
+                                <div class="font-black text-sky-700 text-sm mb-1">圖 ① 周長</div>
+                                <div class="text-xs text-slate-600">1 個完整圓</div>
+                                <div class="font-extrabold text-sky-900 num-font mt-1">= 30 × π</div>
+                            </div>
+                            <div class="bg-amber-50 rounded-2xl p-3 border border-amber-100">
+                                <div class="font-black text-amber-700 text-sm mb-1">圖 ② 周長</div>
+                                <div class="text-xs text-slate-600">4 個內凹 1/4 圓弧</div>
+                                <div class="font-extrabold text-amber-900 num-font mt-1">= 30 × π</div>
+                            </div>
+                            <div class="bg-emerald-50 rounded-2xl p-3 border border-emerald-100">
+                                <div class="font-black text-emerald-700 text-sm mb-1">圖 ③ 周長</div>
+                                <div class="text-xs text-slate-600">2 凸 + 2 凹 1/4 圓弧</div>
+                                <div class="font-extrabold text-emerald-900 num-font mt-1">= 30 × π</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm text-slate-500">
+                    <span>💡 老師小提醒：周長一樣長，但「面積」不一樣大喔！</span>
+                    <span class="font-bold text-indigo-600">周長 = 外圍邊界總長</span>
+                </div>
+            </section>
+
+            <!-- 右側：隨堂小測驗 (佔 5 欄) -->
+            <section class="lg:col-span-5 bg-gradient-to-br from-violet-600 to-indigo-700 text-white rounded-3xl shadow-xl p-6 sm:p-7 flex flex-col justify-between">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-3">
+                        <span>🎯 腦力激盪小測驗</span>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-black mb-2 leading-snug">
+                        如果老師把圖 ③ 中間的「十字虛線」也畫成實線算進去，周長會變多少？
+                    </h3>
+                    <p class="text-indigo-100 text-xs sm:text-sm mb-4">
+                        提示：十字虛線有兩條，每一條的長度都剛好等於正方形的邊長（30 公分）喔！
+                    </p>
+
+                    <div class="space-y-2.5" id="quiz-options">
+                        <button onclick="checkQuiz(1, this)" class="w-full text-left bg-white/15 hover:bg-white/25 border border-white/25 rounded-2xl px-4 py-3 text-sm font-bold transition flex items-center justify-between cursor-pointer">
+                            <span>A. 還是 94.2 公分，完全不變</span>
+                            <span class="quiz-badge"></span>
+                        </button>
+                        <button onclick="checkQuiz(2, this)" class="w-full text-left bg-white/15 hover:bg-white/25 border border-white/25 rounded-2xl px-4 py-3 text-sm font-bold transition flex items-center justify-between cursor-pointer">
+                            <span>B. 增加 30 公分，變成 124.2 公分</span>
+                            <span class="quiz-badge"></span>
+                        </button>
+                        <button onclick="checkQuiz(3, this)" class="w-full text-left bg-white/15 hover:bg-white/25 border border-white/25 rounded-2xl px-4 py-3 text-sm font-bold transition flex items-center justify-between cursor-pointer">
+                            <span>C. 增加 60 公分，變成 154.2 公分</span>
+                            <span class="quiz-badge"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 測驗回饋訊息框 -->
+                <div id="quiz-feedback" class="hidden mt-4 bg-white text-slate-800 rounded-2xl p-3.5 text-xs sm:text-sm font-medium leading-relaxed shadow-inner">
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <script>
+        // 狀態管理變數
+        const state = {
+            fig1Highlighted: false,
+            fig2Assembled: false,
+            fig3Assembled: false,
+            antWalking: { 1: false, 2: false, 3: false },
+            antAnimationIds: { 1: null, 2: null, 3: null }
+        };
+
+        /**
+         * 圖 ①：切換顯示直徑與 4 等分彩色圓弧
+         */
+        function toggleFig1Highlight() {
+            state.fig1Highlighted = !state.fig1Highlighted;
+            const guide = document.getElementById('fig1-diameter-guide');
+            const btnText = document.getElementById('btn-fig1-text');
+            const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b'];
+
+            if (state.fig1Highlighted) {
+                guide.classList.remove('opacity-0');
+                btnText.textContent = '恢復原本樣子';
+                for (let i = 1; i <= 4; i++) {
+                    const arc = document.getElementById(`fig1-arc-${i}`);
+                    arc.setAttribute('stroke', colors[i - 1]);
+                    arc.setAttribute('stroke-width', '4.5');
+                }
+            } else {
+                guide.classList.add('opacity-0');
+                btnText.textContent = '顯示直徑與 4 等分弧';
+                for (let i = 1; i <= 4; i++) {
+                    const arc = document.getElementById(`fig1-arc-${i}`);
+                    arc.setAttribute('stroke', '#1e293b');
+                    arc.setAttribute('stroke-width', '3.5');
+                }
+            }
+            updateGlobalAssembleButton();
+        }
+
+        /**
+         * 圖 ②：切換動畫拆解重組 (4 個內凹 1/4 圓弧平移向中心組合成完整圓)
+         */
+        function toggleFig2Assemble() {
+            state.fig2Assembled = !state.fig2Assembled;
+            const fill = document.getElementById('fig2-fill');
+            const target = document.getElementById('fig2-target-circle');
+            const btnText = document.getElementById('btn-fig2-text');
+
+            const arcTR = document.getElementById('fig2-arc-tr');
+            const arcBR = document.getElementById('fig2-arc-br');
+            const arcBL = document.getElementById('fig2-arc-bl');
+            const arcTL = document.getElementById('fig2-arc-tl');
+
+            if (state.fig2Assembled) {
+                // 如果小螞蟻正在走，先暫停以免路徑錯位
+                if (state.antWalking[2]) toggleAntSingle(2);
+
+                fill.style.opacity = '0.15';
+                target.classList.remove('opacity-0');
+                btnText.textContent = '還原四角星形';
+
+                // 平移各段 1/4 圓弧到中央形成完整的圓 (半徑 75px)
+                arcTR.style.transform = 'translate(-75px, 75px)';
+                arcBR.style.transform = 'translate(-75px, -75px)';
+                arcBL.style.transform = 'translate(75px, -75px)';
+                arcTL.style.transform = 'translate(75px, 75px)';
+            } else {
+                fill.style.opacity = '1';
+                target.classList.add('opacity-0');
+                btnText.textContent = '動畫拆解重組';
+
+                arcTR.style.transform = 'translate(0px, 0px)';
+                arcBR.style.transform = 'translate(0px, 0px)';
+                arcBL.style.transform = 'translate(0px, 0px)';
+                arcTL.style.transform = 'translate(0px, 0px)';
+            }
+            updateGlobalAssembleButton();
+        }
+
+        /**
+         * 圖 ③：切換動畫拆解重組 (保留左上、右下凸弧，移動右上、左下凹弧補滿成完整圓)
+         */
+        function toggleFig3Assemble() {
+            state.fig3Assembled = !state.fig3Assembled;
+            const fill = document.getElementById('fig3-fill');
+            const innerDashed = document.getElementById('fig3-inner-dashed');
+            const target = document.getElementById('fig3-target-circle');
+            const btnText = document.getElementById('btn-fig3-text');
+
+            const arcTR = document.getElementById('fig3-arc-tr');
+            const arcBL = document.getElementById('fig3-arc-bl');
+
+            if (state.fig3Assembled) {
+                if (state.antWalking[3]) toggleAntSingle(3);
+
+                fill.style.opacity = '0.15';
+                innerDashed.style.opacity = '0.25';
+                target.classList.remove('opacity-0');
+                btnText.textContent = '還原風車波浪';
+
+                // 右上凹弧平移 (-75, +75) 補到左下；左下凹弧平移 (+75, -75) 補到右上
+                arcTR.style.transform = 'translate(-75px, 75px)';
+                arcBL.style.transform = 'translate(75px, -75px)';
+            } else {
+                fill.style.opacity = '1';
+                innerDashed.style.opacity = '1';
+                target.classList.add('opacity-0');
+                btnText.textContent = '動畫拆解重組';
+
+                arcTR.style.transform = 'translate(0px, 0px)';
+                arcBL.style.transform = 'translate(0px, 0px)';
+            }
+            updateGlobalAssembleButton();
+        }
+
+        /**
+         * 一鍵魔法重組全部圖形
+         */
+        function toggleAssembleAll() {
+            const anyNotActive = !state.fig1Highlighted || !state.fig2Assembled || !state.fig3Assembled;
+            if (anyNotActive) {
+                if (!state.fig1Highlighted) toggleFig1Highlight();
+                if (!state.fig2Assembled) toggleFig2Assemble();
+                if (!state.fig3Assembled) toggleFig3Assemble();
+            } else {
+                if (state.fig1Highlighted) toggleFig1Highlight();
+                if (state.fig2Assembled) toggleFig2Assemble();
+                if (state.fig3Assembled) toggleFig3Assemble();
+            }
+        }
+
+        function updateGlobalAssembleButton() {
+            const btnText = document.getElementById('btn-assemble-all-text');
+            if (state.fig1Highlighted && state.fig2Assembled && state.fig3Assembled) {
+                btnText.textContent = '全部還原原圖';
+            } else {
+                btnText.textContent = '一鍵魔法重組全部';
+            }
+        }
+
+        /**
+         * 小螞蟻沿著周長爬行模擬器 (單一圖形)
+         */
+        function toggleAntSingle(figNum) {
+            // 若圖2或圖3正處於重組狀態，先還原讓螞蟻沿著原圖外圍爬行，最能理解「原圖周長」
+            if (figNum === 2 && state.fig2Assembled) toggleFig2Assemble();
+            if (figNum === 3 && state.fig3Assembled) toggleFig3Assemble();
+
+            state.antWalking[figNum] = !state.antWalking[figNum];
+            const antGroup = document.getElementById(`ant-${figNum}`);
+            const path = document.getElementById(`ant-path-${figNum}`);
+
+            if (state.antWalking[figNum]) {
+                antGroup.classList.remove('hidden');
+                const totalLength = path.getTotalLength();
+                let startTime = null;
+                const duration = 4500; // 4.5秒走完一圈
+
+                function step(timestamp) {
+                    if (!state.antWalking[figNum]) return;
+                    if (!startTime) startTime = timestamp;
+                    const elapsed = (timestamp - startTime) % duration;
+                    const progress = elapsed / duration;
+                    const point = path.getPointAtLength(progress * totalLength);
+                    antGroup.setAttribute('transform', `translate(${point.x}, ${point.y})`);
+                    state.antAnimationIds[figNum] = requestAnimationFrame(step);
+                }
+                state.antAnimationIds[figNum] = requestAnimationFrame(step);
+            } else {
+                antGroup.classList.add('hidden');
+                if (state.antAnimationIds[figNum]) {
+                    cancelAnimationFrame(state.antAnimationIds[figNum]);
+                }
+            }
+            updateGlobalAntButton();
+        }
+
+        /**
+         * 全部小螞蟻一起爬行
+         */
+        function toggleAntWalkAll() {
+            const anyNotWalking = !state.antWalking[1] || !state.antWalking[2] || !state.antWalking[3];
+            for (let i = 1; i <= 3; i++) {
+                if (anyNotWalking && !state.antWalking[i]) {
+                    toggleAntSingle(i);
+                } else if (!anyNotWalking && state.antWalking[i]) {
+                    toggleAntSingle(i);
+                }
+            }
+        }
+
+        function updateGlobalAntButton() {
+            const btnText = document.getElementById('btn-ant-all-text');
+            if (state.antWalking[1] && state.antWalking[2] && state.antWalking[3]) {
+                btnText.textContent = '讓小螞蟻休息';
+            } else {
+                btnText.textContent = '小螞蟻走邊界';
+            }
+        }
+
+        /**
+         * 隨堂小測驗檢查邏輯
+         */
+        function checkQuiz(optionIndex, btnElement) {
+            const buttons = document.querySelectorAll('#quiz-options button');
+            const feedback = document.getElementById('quiz-feedback');
+
+            // 重置按鈕樣式
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-emerald-500', 'bg-rose-500', 'border-white');
+                btn.classList.add('bg-white/15', 'border-white/25');
+                btn.querySelector('.quiz-badge').textContent = '';
+            });
+
+            feedback.classList.remove('hidden');
+
+            if (optionIndex === 3) {
+                btnElement.classList.remove('bg-white/15');
+                btnElement.classList.add('bg-emerald-500', 'border-white');
+                btnElement.querySelector('.quiz-badge').textContent = '✅ 答對囉！';
+                feedback.innerHTML = '🎉 <strong>太棒了！完全正確！</strong><br>因為十字線有「直的一條 30 cm」＋「橫的一條 30 cm」，總共多出 <span class="text-emerald-700 font-bold">60 公分</span>，所以 94.2 + 60 = <span class="text-emerald-700 font-bold">154.2 公分</span>！這也提醒我們：<strong>虛線只是輔助線，平常算周長千萬不能算進去喔！</strong>';
+            } else {
+                btnElement.classList.remove('bg-white/15');
+                btnElement.classList.add('bg-rose-500', 'border-white');
+                btnElement.querySelector('.quiz-badge').textContent = '❌ 再想想看';
+                if (optionIndex === 1) {
+                    feedback.innerHTML = '🤔 <strong>差一點點！</strong>如果把虛線變成實線，小螞蟻就要多走中間的十字路了，所以總長度會變長喔！數數看十字有幾條 30 公分的線呢？';
+                } else {
+                    feedback.innerHTML = '🤔 <strong>很接近囉！</strong>橫的那一條虛線是 30 公分，那「直的那一條」虛線是不是也是 30 公分呢？兩條合起來一共增加了多少公分？';
+                }
+            }
+        }
+
+        /**
+         * 切換顯示/隱藏完整解答框
+         */
+        function toggleAnswerBox() {
+            const box = document.getElementById('answer-box');
+            const btn = document.getElementById('btn-reveal-answer');
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                btn.textContent = '隱藏解答';
+            } else {
+                box.classList.add('hidden');
+                btn.textContent = '顯示完整解答';
+            }
+        }
+    </script>
+</body>
+</html>
