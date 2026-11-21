@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="新埔國小教學工作坊，提供臺灣國小各領域優質教案、班級經營工具、課堂抽籤器與計時器。">
-    <title>新埔國小教學工作坊 | 智彬數位教學資源網</title>
+    <meta name="description" content="新埔國小教學工作坊智彬數位教學，提供臺灣國小各領域優質教案、班級經營工具、課堂抽籤器與計時器。">
+    <title>新埔國小教學工作坊 | 智彬數位教學</title>
     
     <!-- Google Fonts: Noto Sans TC 繁體中文思源黑體 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,13 +98,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 sm:h-20">
                 <!-- 網站標誌與標題 -->
-                <a href="#" class="flex items-center gap-3 group" aria-label="晨光國小教學工作坊首頁">
+                <a href="#" class="flex items-center gap-3 group" aria-label="新埔國小教學工作坊首頁">
                     <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-morandi-500 to-mint-500 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
                         <i class="fa-solid fa-sun text-lg sm:text-xl"></i>
                     </div>
                     <div>
                         <span class="block text-base sm:text-lg font-bold text-morandi-800 tracking-wide">新埔國小教學工作坊</span>
-                        <span class="block text-xs text-morandi-500 font-medium">智彬數位教學</span>
+                        <span class="block text-xs text-morandi-500 font-medium">新埔國小 · 智彬數位教學</span>
                     </div>
                 </a>
 
@@ -255,17 +255,11 @@
                     <button type="button" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-600 hover:bg-morandi-50 border border-slate-200 transition-all" data-filter="math">
                         數學
                     </button>
-                    <button type="button" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-600 hover:bg-morandi-50 border border-slate-200 transition-all" data-filter="science">
-                        自然科學
-                    </button>
-                    <button type="button" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-600 hover:bg-morandi-50 border border-slate-200 transition-all" data-filter="social">
-                        社會與生活
-                    </button>
                 </div>
             </div>
 
-            <!-- 響應式卡片網格 (CSS Grid) -->
-            <div id="curriculum-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- 響應式卡片網格 (CSS Grid：保留國語文與數學兩大核心領域) -->
+            <div id="curriculum-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 <!-- 卡片 1：國語文 -->
                 <article class="curriculum-card bg-white rounded-2xl border border-warmcream-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group" data-category="chinese">
@@ -326,64 +320,6 @@
                     </div>
                 </article>
 
-                <!-- 卡片 3：自然科學 -->
-                <article class="curriculum-card bg-white rounded-2xl border border-warmcream-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group" data-category="science">
-                    <div>
-                        <div class="h-2 bg-mint-500"></div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between gap-2 mb-3">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-mint-50 text-mint-600 border border-mint-100">
-                                    <i class="fa-solid fa-seedling mr-1"></i>自然科學領域
-                                </span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-warmcream-100 text-slate-600">
-                                    高年級（五、六年級）
-                                </span>
-                            </div>
-                            <h3 class="text-lg font-bold text-morandi-900 mb-2 group-hover:text-morandi-600 transition-colors">
-                                校園小小氣象站：天氣變化與雲朵觀測
-                            </h3>
-                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                                帶領學生認識常見雲種與氣壓變化，實際操作簡易氣象觀測儀器，並學習判讀中央氣象署衛星雲圖。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 pt-2 border-t border-slate-50">
-                        <button type="button" onclick="openLessonModal('science-1')" class="w-full py-2.5 px-4 rounded-xl bg-morandi-50 hover:bg-morandi-600 text-morandi-700 hover:text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-eye"></i>
-                            教案預覽與下載
-                        </button>
-                    </div>
-                </article>
-
-                <!-- 卡片 4：社會與生活 -->
-                <article class="curriculum-card bg-white rounded-2xl border border-warmcream-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group" data-category="social">
-                    <div>
-                        <div class="h-2 bg-amber-400"></div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between gap-2 mb-3">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-amber-50 text-amber-700 border border-amber-100">
-                                    <i class="fa-solid fa-map-location-dot mr-1"></i>社會與生活
-                                </span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-warmcream-100 text-slate-600">
-                                    低年級（一、二年級）
-                                </span>
-                            </div>
-                            <h3 class="text-lg font-bold text-morandi-900 mb-2 group-hover:text-morandi-600 transition-colors">
-                                走讀家鄉好味道：社區踏查與地圖繪製
-                            </h3>
-                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                                從學校周邊出發，認識社區重要地標與在地職人故事，培養愛護鄉土情懷並合作完成立體社區小地圖。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 pt-2 border-t border-slate-50">
-                        <button type="button" onclick="openLessonModal('social-1')" class="w-full py-2.5 px-4 rounded-xl bg-morandi-50 hover:bg-morandi-600 text-morandi-700 hover:text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-eye"></i>
-                            教案預覽與下載
-                        </button>
-                    </div>
-                </article>
-
             </div>
         </section>
 
@@ -413,7 +349,7 @@
                                     </div>
                                 </div>
                                 <span id="remaining-badge" class="px-3 py-1 rounded-full bg-morandi-100 text-morandi-700 text-xs font-semibold">
-                                    待抽人數：12 人
+                                    待抽人數：24 人
                                 </span>
                             </div>
 
@@ -595,7 +531,7 @@
                                 <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-rose-50 text-rose-700">第 16 週・12/19 (六)</span>
                                 <span class="text-xs font-medium text-slate-400">藝文體育</span>
                             </div>
-                            <h4 class="text-base font-bold text-slate-800">晨光校慶運動會暨教學成果展</h4>
+                            <h4 class="text-base font-bold text-slate-800">新埔校慶運動會暨教學成果展</h4>
                             <p class="text-sm text-slate-600 mt-1">各學年健康操預演與學生優良作品靜態展覽佈置開始。</p>
                         </div>
                     </div>
@@ -661,7 +597,7 @@
                         <div class="w-9 h-9 rounded-xl bg-mint-500 flex items-center justify-center text-white">
                             <i class="fa-solid fa-sun"></i>
                         </div>
-                        <span class="text-lg font-bold text-white">晨光國小教學工作坊</span>
+                        <span class="text-lg font-bold text-white">新埔國小教學工作坊</span>
                     </div>
                     <p class="text-sm text-morandi-300 leading-relaxed">
                         致力於推動教師專業社群共備與數位教學創新，陪伴每一位老師與孩子在快樂探索中穩健成長。
@@ -685,22 +621,22 @@
                     <ul class="space-y-2.5 text-sm text-morandi-300">
                         <li class="flex items-start gap-2.5">
                             <i class="fa-solid fa-location-dot mt-1 text-mint-400"></i>
-                            <span>338 桃園市蘆竹區晨光路 100 號（教務處教學組）</span>
+                            <span>330 桃園市桃園區新埔六街 21 號（新埔國小教務處教學組）</span>
                         </li>
                         <li class="flex items-center gap-2.5">
                             <i class="fa-solid fa-phone text-mint-400"></i>
-                            <span>(03) 312-8888 轉 210～215</span>
+                            <span>(03) 316-2972 轉 210～215</span>
                         </li>
                         <li class="flex items-center gap-2.5">
                             <i class="fa-solid fa-envelope text-mint-400"></i>
-                            <span>edu-workshop@chenguang.tyc.edu.tw</span>
+                            <span>zhibin-edu@spes.tyc.edu.tw</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-morandi-400 gap-3">
-                <p>&copy; 2026 晨光國民小學教學工作坊 | 數位教學資源網 版權所有。</p>
+                <p>&copy; 2026 新埔國小教學工作坊 | 智彬數位教學 版權所有。</p>
                 <p>專為臺灣國小教育現場設計・支持無障礙與響應式瀏覽</p>
             </div>
         </div>
@@ -865,40 +801,6 @@
                     { phase: '歸納總結 (10 分鐘)', desc: '全班發表發現，歸納「分子與分母同乘以一個整數」的等值規律。' }
                 ],
                 worksheet: '【學習單任務】請幫派對主人設計兩份一樣多的巧克力分配法，並用塗色方式在長條圖上證明它們是等值分數。'
-            },
-            'science-1': {
-                category: '自然科學領域',
-                grade: '高年級（五、六年級）',
-                title: '校園小小氣象站：天氣變化與雲朵觀測',
-                meta: '設計者：張家瑋老師 ｜ 建議節數：2 節課（共 80 分鐘） ｜ 對應領綱：INc-III-10',
-                objectives: [
-                    '能辨識積雲、層雲與卷雲的外觀特徵與天氣關聯。',
-                    '學會使用數位平板查詢並判讀中央氣象署即時衛星雲圖。',
-                    '能持續一週記錄校園氣溫與雲量變化，培養科學探究精神。'
-                ],
-                steps: [
-                    { phase: '雲朵猜猜看 (10 分鐘)', desc: '展示多種雲朵攝影作品，引導學生觀察形狀與高度差異。' },
-                    { phase: '戶外觀測站 (20 分鐘)', desc: '攜帶雲朵觀測卡至操場實際比對天空雲況，並記錄當時風向。' },
-                    { phase: '雲圖小主播 (10 分鐘)', desc: '分組上台模擬氣象主播，根據當日雲圖預測明日降雨機率。' }
-                ],
-                worksheet: '【學習單任務】連續五天在午休時間觀察天空，畫下雲朵形狀、勾選雲量比例，並寫下當天的體感天氣描述。'
-            },
-            'social-1': {
-                category: '社會與生活',
-                grade: '低年級（一、二年級）',
-                title: '走讀家鄉好味道：社區踏查與地圖繪製',
-                meta: '設計者：王怡君老師 ｜ 建議節數：3 節課（統整課程） ｜ 對應領綱：生活 2-I-1',
-                objectives: [
-                    '認識學校周邊的重要公共設施（如郵局、公園、圖書館）與功能。',
-                    '學習在戶外踏查時遵守交通規則與訪問禮貌。',
-                    '能與同學合作將踏查路線繪製成簡易社區地圖。'
-                ],
-                steps: [
-                    { phase: '行前準備 (10 分鐘)', desc: '討論社區安全守則與訪問社區店家的禮貌用語練習。' },
-                    { phase: '實地走讀 (20 分鐘)', desc: '在導師與家長志工陪同下，走訪學校周邊三個特色地點。' },
-                    { phase: '地圖拼貼畫 (10 分鐘)', desc: '回到教室，各組將拍攝的照片與手繪圖卡貼在大型社區底圖上。' }
-                ],
-                worksheet: '【學習單任務】請選出一個你最喜歡的社區角落，畫出它的樣子，並寫下一句感謝社區服務人員的話。'
             }
         };
 
@@ -959,7 +861,7 @@
             if (!currentLessonKey) return;
             const data = lessonData[currentLessonKey];
             const content = [
-                `【晨光國小教學工作坊 - 教案與學習單大綱】`,
+                `【新埔國小教學工作坊 - 智彬數位教學教案大綱】`,
                 `領域：${data.category}`,
                 `年級：${data.grade}`,
                 `單元主題：${data.title}`,
@@ -986,12 +888,15 @@
         });
 
         /**
-         * 3. 課堂互動工具一：隨機抽籤點名器
+         * 3. 課堂互動工具一：隨機抽籤點名器（六年級導師班 24 人預設名單）
          */
         const defaultStudents = [
             '01 陳宇軒', '02 林品妍', '03 黃子豪', '04 張語彤',
             '05 李承恩', '06 王宥希', '07 吳柏睿', '08 劉芷晴',
-            '09 蔡秉翰', '10 楊欣妤', '11 許博宇', '12 鄭羽涵'
+            '09 蔡秉翰', '10 楊欣妤', '11 許博宇', '12 鄭羽涵',
+            '13 謝睿哲', '14 郭子瑜', '15 洪宇翔', '16 邱品臻',
+            '17 曾柏翰', '18 廖宥晴', '19 賴冠宇', '20 徐芷妍',
+            '21 周楷倫', '22 葉芯瑜', '23 莊博鈞', '24 蘇詠晴'
         ];
 
         let allStudents = [...defaultStudents];
