@@ -150,6 +150,10 @@
                         <i class="fa-solid fa-layer-group text-skybrand-600" aria-hidden="true"></i>
                         領域課程資源庫
                     </a>
+                    <button type="button" id="header-import-btn" class="px-4 py-2 rounded-xl text-sm font-semibold bg-mint-600 hover:bg-mint-700 text-white shadow-xs transition-colors inline-flex items-center gap-2">
+                        <i class="fa-solid fa-link" aria-hidden="true"></i>
+                        匯入網頁連結
+                    </button>
                 </nav>
 
                 <!-- 手機版漢堡選單按鈕 -->
@@ -160,11 +164,15 @@
         </div>
 
         <!-- 手機版展開選單 -->
-        <nav id="mobile-menu" class="hidden md:hidden bg-white border-t border-ivory-200 px-4 py-3 shadow-lg" aria-label="行動版導覽列">
+        <nav id="mobile-menu" class="hidden md:hidden bg-white border-t border-ivory-200 px-4 py-3 shadow-lg space-y-1.5" aria-label="行動版導覽列">
             <a href="#curriculum" class="mobile-nav-link flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-skybrand-50 hover:text-skybrand-700 transition-colors">
                 <i class="fa-solid fa-layer-group text-skybrand-600" aria-hidden="true"></i>
                 領域課程資源庫
             </a>
+            <button type="button" id="mobile-import-btn" class="mobile-nav-link w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-semibold text-mint-700 bg-mint-50 hover:bg-mint-100 transition-colors">
+                <i class="fa-solid fa-link text-mint-600" aria-hidden="true"></i>
+                匯入網頁連結
+            </button>
         </nav>
     </header>
 
@@ -196,36 +204,36 @@
                     </a>
                 </div>
             </div>
-        </section>
-
-        <!-- ==================== 3. 領域課程資源庫 (Curriculum Resources) ==================== -->
-        <section id="curriculum" class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="curriculum-heading">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-                <div>
-                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-mint-700 mb-2">
-                        <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-                        CURRICULUM REPOSITORY
+                <!-- 領域篩選標籤與匯入網頁連結按鈕群組 -->
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <div class="flex flex-wrap gap-2" role="group" aria-label="課程領域篩選">
+                        <button type="button" data-filter="all" aria-pressed="true" class="filter-btn active px-4 py-2.5 rounded-xl text-sm font-semibold bg-skybrand-600 text-white shadow-xs transition-all">
+                            全部領域
+                        </button>
+                        <button type="button" data-filter="chinese" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-ivory-200 hover:bg-peach-50 hover:text-peach-700 transition-all">
+                            國語文
+                        </button>
+                        <button type="button" data-filter="math" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-ivory-200 hover:bg-skybrand-50 hover:text-skybrand-700 transition-all">
+                            數學
+                        </button>
                     </div>
-                    <h2 id="curriculum-heading" class="text-2xl sm:text-3xl font-bold text-slate-800">
-                        領域課程資源庫
-                    </h2>
-                    <p class="text-slate-600 mt-1.5 text-sm sm:text-base">
-                        點選領域標籤篩選課程單元，可開啟詳細教案大綱預覽並匯出備課文字檔。
-                    </p>
-                </div>
 
-                <!-- 領域篩選標籤按鈕群組 -->
-                <div class="flex flex-wrap gap-2" role="group" aria-label="課程領域篩選">
-                    <button type="button" data-filter="all" aria-pressed="true" class="filter-btn active px-4 py-2.5 rounded-xl text-sm font-semibold bg-skybrand-600 text-white shadow-xs transition-all">
-                        全部領域
-                    </button>
-                    <button type="button" data-filter="chinese" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-ivory-200 hover:bg-peach-50 hover:text-peach-700 transition-all">
-                        國語文
-                    </button>
-                    <button type="button" data-filter="math" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-ivory-200 hover:bg-skybrand-50 hover:text-skybrand-700 transition-all">
-                        數學
+                    <button type="button" id="open-import-modal-btn" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-mint-600 hover:bg-mint-700 text-white shadow-xs hover:shadow-sm transition-all inline-flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle" aria-hidden="true"></i>
+                        匯入網頁連結
                     </button>
                 </div>
+            </div>
+
+            <!-- 操作狀態提示橫幅（新增 / 刪除 / 匯入成功通知） -->
+            <div id="global-toast" class="hidden mb-6 p-4 rounded-xl bg-mint-50 border border-mint-200 text-mint-800 text-sm font-semibold flex items-center justify-between gap-3 shadow-xs" role="status" aria-live="polite">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-circle-check text-mint-600 text-base" aria-hidden="true"></i>
+                    <span id="global-toast-text">操作已完成</span>
+                </div>
+                <button type="button" id="close-toast-btn" class="text-mint-700 hover:text-mint-900 p-1 rounded-lg" aria-label="關閉提示">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
             </div>
 
             <!-- 課程卡片網格（雙欄明亮親和排版） -->
@@ -351,6 +359,8 @@
                     </div>
                 </article>
 
+                <!-- 使用者匯入的數位網頁連結卡片將由 JavaScript 動態插入此處 -->
+
             </div>
         </section>
 
@@ -386,6 +396,21 @@
 
             <!-- Modal 內容滾動區 -->
             <div class="p-6 overflow-y-auto custom-scrollbar space-y-5 text-slate-700">
+                <!-- 若有綁定外部教學網頁連結，顯示醒目傳送門 -->
+                <div id="modal-external-link-box" class="hidden p-4 rounded-xl bg-skybrand-50 border border-skybrand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <span class="block text-xs font-bold text-skybrand-700 uppercase tracking-wider mb-0.5">
+                            <i class="fa-solid fa-globe mr-1" aria-hidden="true"></i>
+                            數位教學網頁連結
+                        </span>
+                        <p id="modal-url-text" class="text-xs sm:text-sm text-slate-600 truncate font-mono"></p>
+                    </div>
+                    <a id="modal-external-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="shrink-0 px-4 py-2.5 rounded-xl bg-mint-600 hover:bg-mint-700 text-white font-semibold text-sm shadow-xs transition-colors inline-flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                        前往教學網頁
+                    </a>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-ivory-100 p-4 rounded-xl border border-ivory-200 text-sm">
                     <div>
                         <span class="text-slate-500 font-medium">適用年段：</span>
@@ -439,10 +464,176 @@
         </div>
     </div>
 
+    <!-- ==================== 匯入新教學網頁連結 Modal 視窗 ==================== -->
+    <div id="import-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/45 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="import-modal-title">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-ivory-200 overflow-hidden flex flex-col max-h-[92vh]">
+            <!-- Modal 頂部標題列 -->
+            <div class="px-6 py-4 bg-gradient-to-r from-mint-600 to-teal-500 text-white flex items-center justify-between gap-4">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-link text-sm" aria-hidden="true"></i>
+                    </span>
+                    <h3 id="import-modal-title" class="text-base sm:text-lg font-bold truncate">匯入新教學網頁連結</h3>
+                </div>
+                <button type="button" id="close-import-modal-btn" class="shrink-0 w-9 h-9 rounded-lg bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors" aria-label="關閉匯入視窗">
+                    <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- 表單內容區 -->
+            <form id="import-resource-form" class="p-6 overflow-y-auto custom-scrollbar space-y-4 text-slate-700" novalidate>
+                <p class="text-xs sm:text-sm text-slate-600 bg-ivory-100 border border-ivory-200 rounded-xl p-3.5 leading-relaxed">
+                    <i class="fa-solid fa-lightbulb text-amber-500 mr-1.5" aria-hidden="true"></i>
+                    可匯入自編 GitHub Pages 互動繪本、Canva 簡報、Wordwall 遊戲或 Padlet 討論板網址，新增後將自動儲存於此瀏覽器並顯示於課程資源庫。
+                </p>
+
+                <!-- 錯誤訊息提示框 -->
+                <div id="import-form-error" class="hidden p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-semibold flex items-start gap-2" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation mt-0.5 shrink-0" aria-hidden="true"></i>
+                    <span id="import-form-error-text">請檢查欄位輸入格式是否正確。</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- 課程領域 -->
+                    <div>
+                        <label for="input-category" class="block text-sm font-bold text-slate-800 mb-1.5">
+                            課程領域 <span class="text-peach-600">*</span>
+                        </label>
+                        <select id="input-category" name="category" required class="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 bg-white text-slate-800 text-sm font-medium focus:border-skybrand-500">
+                            <option value="chinese">國語文領域</option>
+                            <option value="math">數學領域</option>
+                        </select>
+                    </div>
+
+                    <!-- 年級 / 版本標籤 -->
+                    <div>
+                        <label for="input-grade" class="block text-sm font-bold text-slate-800 mb-1.5">
+                            年級 / 教材標籤
+                        </label>
+                        <input type="text" id="input-grade" name="grade" value="六年級・自編數位教材" placeholder="例如：六年級・康軒版" class="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 bg-white text-slate-800 text-sm focus:border-skybrand-500">
+                    </div>
+                </div>
+
+                <!-- 資源標題 -->
+                <div>
+                    <label for="input-title" class="block text-sm font-bold text-slate-800 mb-1.5">
+                        教學資源標題 <span class="text-peach-600">*</span>
+                    </label>
+                    <input type="text" id="input-title" name="title" required placeholder="例如：互動數位繪本故事館：閱讀與創作引導" class="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 bg-white text-slate-800 text-sm focus:border-skybrand-500">
+                </div>
+
+                <!-- 網頁連結網址 -->
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-1.5">
+                        <label for="input-url" class="block text-sm font-bold text-slate-800">
+                            網頁連結網址 (URL) <span class="text-peach-600">*</span>
+                        </label>
+                        <button type="button" id="fill-sample-btn" class="text-xs font-semibold text-skybrand-700 hover:text-skybrand-600 underline underline-offset-2">
+                            帶入繪本網址範例
+                        </button>
+                    </div>
+                    <input type="url" id="input-url" name="url" required placeholder="https://example.github.io/lesson/" class="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 bg-white text-slate-800 text-sm font-mono focus:border-skybrand-500">
+                </div>
+
+                <!-- 資源簡介 -->
+                <div>
+                    <label for="input-summary" class="block text-sm font-bold text-slate-800 mb-1.5">
+                        課程資源簡介 <span class="text-peach-600">*</span>
+                    </label>
+                    <textarea id="input-summary" name="summary" rows="2" required placeholder="簡述此網頁教材的教學目標與課堂使用方式..." class="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 bg-white text-slate-800 text-sm leading-relaxed focus:border-skybrand-500"></textarea>
+                </div>
+
+                <!-- 學習重點 / 課堂活動說明 -->
+                <div>
+                    <label for="input-notes" class="block text-sm font-bold text-slate-800 mb-1.5">
+                        課堂活動步驟 / 教學備註（選填，每行一項）
+                    </label>
+                    <textarea id="input-notes" name="notes" rows="3" placeholder="例如：&#10;1. 教師投影數位繪本進行共讀提問&#10;2. 學生分組討論故事結局並完成學習單" class="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 bg-white text-slate-800 text-sm leading-relaxed focus:border-skybrand-500"></textarea>
+                </div>
+
+                <!-- 跨裝置備份與還原工具列 -->
+                <div class="pt-3 border-t border-ivory-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span class="text-slate-500 font-medium">
+                        目前自訂連結數量：<strong id="custom-resource-count" class="text-slate-800">0</strong> 筆
+                    </span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button" id="export-json-btn" class="px-3 py-1.5 rounded-lg bg-ivory-100 hover:bg-ivory-200 text-slate-700 font-semibold border border-ivory-300 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-download text-skybrand-600" aria-hidden="true"></i>
+                            匯出連結備份 (.json)
+                        </button>
+                        <label for="import-json-file" class="cursor-pointer px-3 py-1.5 rounded-lg bg-ivory-100 hover:bg-ivory-200 text-slate-700 font-semibold border border-ivory-300 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-upload text-mint-600" aria-hidden="true"></i>
+                            還原備份檔
+                            <input type="file" id="import-json-file" accept=".json,application/json" class="sr-only">
+                        </label>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Modal 底部按鈕列 -->
+            <div class="px-6 py-4 bg-ivory-50 border-t border-ivory-200 flex flex-col sm:flex-row justify-end gap-3">
+                <button type="button" id="cancel-import-btn" class="px-5 py-2.5 rounded-xl border border-ivory-300 bg-white hover:bg-ivory-100 text-slate-700 font-semibold text-sm transition-colors">
+                    取消
+                </button>
+                <button type="submit" form="import-resource-form" class="px-6 py-2.5 rounded-xl bg-mint-600 hover:bg-mint-700 text-white font-semibold text-sm shadow-xs transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-check" aria-hidden="true"></i>
+                    儲存並加入資源庫
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 刪除確認對話框 Modal ==================== -->
+    <div id="delete-confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/45 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-ivory-200 overflow-hidden">
+            <div class="p-6">
+                <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-4 border border-red-100">
+                    <i class="fa-solid fa-trash-can text-xl" aria-hidden="true"></i>
+                </div>
+                <h3 id="delete-modal-title" class="text-lg font-bold text-slate-800 mb-2">確定要移除此網頁連結嗎？</h3>
+                <p id="delete-modal-desc" class="text-sm text-slate-600 leading-relaxed">
+                    移除後將從此瀏覽器的課程資源庫中刪除該連結（建議先匯出 JSON 備份以防遺失）。
+                </p>
+            </div>
+            <div class="px-6 py-4 bg-ivory-50 border-t border-ivory-200 flex justify-end gap-3">
+                <button type="button" id="cancel-delete-btn" class="px-4 py-2 rounded-xl border border-ivory-300 bg-white hover:bg-ivory-100 text-slate-700 font-semibold text-sm transition-colors">
+                    保留連結
+                </button>
+                <button type="button" id="confirm-delete-btn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-xs transition-colors">
+                    確認移除
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== 原生 JavaScript 互動控制中心 ==================== -->
     <script>
         (function () {
             'use strict';
+
+            const STORAGE_KEY = 'xinpu_teaching_resources_v1';
+            let currentFilter = 'all';
+
+            /* ----------------------------------------------------------------
+               0. 全域操作提示橫幅控制
+            ---------------------------------------------------------------- */
+            const globalToast = document.getElementById('global-toast');
+            const globalToastText = document.getElementById('global-toast-text');
+            const closeToastBtn = document.getElementById('close-toast-btn');
+            let toastTimer = null;
+
+            function showToast(message) {
+                globalToastText.textContent = message;
+                globalToast.classList.remove('hidden');
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    globalToast.classList.add('hidden');
+                }, 5000);
+            }
+
+            closeToastBtn.addEventListener('click', () => {
+                globalToast.classList.add('hidden');
+            });
 
             /* ----------------------------------------------------------------
                1. 手機版漢堡選單切換邏輯
@@ -472,10 +663,23 @@
             });
 
             /* ----------------------------------------------------------------
-               2. 領域課程資源庫篩選功能
+               2. 領域課程資源庫篩選功能（支援內建卡片與動態匯入卡片）
             ---------------------------------------------------------------- */
             const filterBtns = document.querySelectorAll('.filter-btn');
-            const curriculumCards = document.querySelectorAll('.curriculum-card');
+            const curriculumGrid = document.getElementById('curriculum-grid');
+
+            function applyCategoryFilter(selectedFilter) {
+                currentFilter = selectedFilter;
+                const allCards = curriculumGrid.querySelectorAll('.curriculum-card');
+                allCards.forEach((card) => {
+                    const category = card.dataset.category;
+                    if (selectedFilter === 'all' || category === selectedFilter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            }
 
             filterBtns.forEach((btn) => {
                 btn.addEventListener('click', () => {
@@ -496,23 +700,16 @@
                         b.classList.toggle('border-ivory-200', !isSelected);
                     });
 
-                    // 過濾課程卡片
-                    curriculumCards.forEach((card) => {
-                        const category = card.dataset.category;
-                        if (selectedFilter === 'all' || category === selectedFilter) {
-                            card.classList.remove('hidden');
-                        } else {
-                            card.classList.add('hidden');
-                        }
-                    });
+                    applyCategoryFilter(selectedFilter);
                 });
             });
 
             /* ----------------------------------------------------------------
-               3. 教案預覽與下載 Modal 互動系統（含焦點管理與 UTF-8 BOM 下載）
+               3. 教案資料庫與自訂網頁連結存取管理 (localStorage)
             ---------------------------------------------------------------- */
-            const lessonDatabase = {
+            const builtInLessons = {
                 'chinese-1': {
+                    categoryKey: 'chinese',
                     category: '國語文領域',
                     title: '閱讀理解策略：心智圖與關鍵句萃取',
                     grade: '五年級上學期',
@@ -527,6 +724,7 @@
                     assessment: '能正確標示課文各段關鍵詞彙（佔 40%）、小組心智圖結構完整且邏輯清晰（佔 40%）、口頭摘要表達流暢（佔 20%）。'
                 },
                 'math-1': {
+                    categoryKey: 'math',
                     category: '數學領域',
                     title: '分數派對大作戰：等值分數與生活應用',
                     grade: '四年級上學期',
@@ -541,6 +739,7 @@
                     assessment: '能透過摺紙與畫圖正確表徵等值分數（佔 50%）、能獨立解決生活情境應用題並寫出合理算式（佔 50%）。'
                 },
                 'chinese-2': {
+                    categoryKey: 'chinese',
                     category: '國語文領域',
                     title: '思辨寫作工坊：議論文立場與論據建構',
                     grade: '六年級上學期',
@@ -556,6 +755,7 @@
                     assessment: '立場鮮明且前後一致（佔 30%）、論據具備生活實例或數據支持（佔 40%）、句型與轉折詞運用適切（佔 30%）。'
                 },
                 'math-2': {
+                    categoryKey: 'math',
                     category: '數學領域',
                     title: '圓周率與圓面積探索：幾何切割與推導',
                     grade: '六年級上學期',
@@ -571,18 +771,174 @@
                 }
             };
 
+            function loadCustomResources() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    if (!raw) return [];
+                    const parsed = JSON.parse(raw);
+                    return Array.isArray(parsed) ? parsed : [];
+                } catch (err) {
+                    console.warn('讀取本機教學資源失敗:', err);
+                    return [];
+                }
+            }
+
+            function saveCustomResources(list) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+                } catch (err) {
+                    console.warn('儲存本機教學資源失敗:', err);
+                }
+            }
+
+            let customResources = loadCustomResources();
+
+            function getLessonById(id) {
+                if (builtInLessons[id]) return builtInLessons[id];
+                const found = customResources.find((item) => item.id === id);
+                if (!found) return null;
+
+                const isChinese = found.categoryKey === 'chinese';
+                const parsedSteps = found.notes && found.notes.trim()
+                    ? found.notes.split(/\r?\n/).map((line) => line.trim()).filter(Boolean)
+                    : [
+                        '【課堂導入】開啟數位教學網頁並展示單元核心主題。',
+                        '【互動探索】引導學生透過網頁教材進行觀察、操作或分組討論。',
+                        '【統整延伸】教師統整學習重點並搭配課堂口頭發表或學習單檢核。'
+                    ];
+
+                return {
+                    id: found.id,
+                    isCustom: true,
+                    categoryKey: found.categoryKey,
+                    category: isChinese ? '國語文領域' : '數學領域',
+                    title: found.title,
+                    grade: found.grade || '自編數位教材',
+                    duration: '彈性數位教學單元',
+                    competency: isChinese
+                        ? '國-E-B2 理解網際網路和資訊科技對學習的重要性，藉以擴展語文學習的範疇，並培養審慎使用各類資訊的能力。'
+                        : '數-E-B2 具備報讀、製作基本統計圖表之能力，並能運用數位工具輔助數學概念理解與問題解決。',
+                    url: found.url,
+                    summary: found.summary,
+                    steps: parsedSteps,
+                    assessment: found.summary
+                };
+            }
+
+            /* ----------------------------------------------------------------
+               4. 動態渲染使用者匯入的網頁連結卡片
+            ---------------------------------------------------------------- */
+            const customCountEl = document.getElementById('custom-resource-count');
+
+            function renderCustomCards() {
+                // 移除舊的動態卡片
+                curriculumGrid.querySelectorAll('.custom-imported-card').forEach((el) => el.remove());
+
+                customResources.forEach((item) => {
+                    const isChinese = item.categoryKey === 'chinese';
+                    const article = document.createElement('article');
+                    article.className = `curriculum-card custom-imported-card bg-white rounded-2xl border border-ivory-200 ${isChinese ? 'hover:border-peach-200' : 'hover:border-skybrand-200'} flex flex-col justify-between overflow-hidden group`;
+                    article.dataset.category = item.categoryKey;
+
+                    const topBarClass = isChinese
+                        ? 'from-orange-400 to-amber-400'
+                        : 'from-skybrand-400 to-teal-400';
+                    const badgeClass = isChinese
+                        ? 'bg-peach-100 text-peach-700 border-peach-200'
+                        : 'bg-skybrand-100 text-skybrand-700 border-skybrand-200';
+                    const iconClass = isChinese
+                        ? 'fa-pen-nib text-peach-600'
+                        : 'fa-shapes text-skybrand-600';
+                    const titleHoverClass = isChinese
+                        ? 'group-hover:text-peach-700'
+                        : 'group-hover:text-skybrand-700';
+
+                    article.innerHTML = `
+                        <div>
+                            <div class="h-1.5 bg-gradient-to-r ${topBarClass}"></div>
+                            <div class="p-6 sm:p-7">
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span class="px-3 py-1 rounded-lg text-xs font-bold ${badgeClass} border inline-flex items-center gap-1.5">
+                                            <i class="fa-solid ${iconClass}" aria-hidden="true"></i>
+                                            ${isChinese ? '國語文領域' : '數學領域'}
+                                        </span>
+                                        <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-mint-50 text-mint-700 border border-mint-200 inline-flex items-center gap-1">
+                                            <i class="fa-solid fa-link text-mint-600" aria-hidden="true"></i>
+                                            自訂連結
+                                        </span>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-lg text-xs font-medium bg-ivory-100 text-slate-600 border border-ivory-200">
+                                        ${escapeHtml(item.grade || '自編數位教材')}
+                                    </span>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 ${titleHoverClass} transition-colors leading-snug">
+                                    ${escapeHtml(item.title)}
+                                </h3>
+                                <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-3">
+                                    ${escapeHtml(item.summary)}
+                                </p>
+                                <div class="text-xs text-slate-500 font-mono bg-ivory-100 px-3 py-1.5 rounded-lg border border-ivory-200 truncate">
+                                    <i class="fa-solid fa-globe text-skybrand-600 mr-1.5" aria-hidden="true"></i>${escapeHtml(item.url)}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-ivory-200 bg-ivory-50 flex flex-wrap items-center gap-2.5">
+                            <a href="${escapeAttribute(item.url)}" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[140px] py-2.5 px-4 rounded-xl bg-mint-600 hover:bg-mint-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                開啟網頁連結
+                            </a>
+                            <button type="button" data-lesson-id="${escapeAttribute(item.id)}" class="open-lesson-btn py-2.5 px-3.5 rounded-xl bg-skybrand-600 hover:bg-skybrand-700 text-white font-semibold text-sm transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs">
+                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                                預覽詳情
+                            </button>
+                            <button type="button" data-delete-id="${escapeAttribute(item.id)}" class="delete-custom-btn py-2.5 px-3 rounded-xl bg-white hover:bg-red-50 text-slate-600 hover:text-red-600 border border-ivory-300 hover:border-red-200 font-semibold text-sm transition-colors inline-flex items-center justify-center" aria-label="刪除此自訂網頁連結" title="刪除此自訂網頁連結">
+                                <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    `;
+
+                    curriculumGrid.appendChild(article);
+                });
+
+                if (customCountEl) {
+                    customCountEl.textContent = String(customResources.length);
+                }
+
+                // 重新套用目前選擇的領域篩選條件
+                applyCategoryFilter(currentFilter);
+            }
+
+            function escapeHtml(str) {
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function escapeAttribute(str) {
+                return escapeHtml(str);
+            }
+
+            /* ----------------------------------------------------------------
+               5. 教案預覽與下載 Modal 互動系統（支援外部連結與事件委派）
+            ---------------------------------------------------------------- */
             const lessonModal = document.getElementById('lesson-modal');
             const closeModalBtn = document.getElementById('close-modal-btn');
             const closeModalFooterBtn = document.getElementById('close-modal-footer-btn');
             const downloadLessonBtn = document.getElementById('download-lesson-btn');
             const downloadFeedback = document.getElementById('download-feedback');
-            const openLessonBtns = document.querySelectorAll('.open-lesson-btn');
+            const modalExternalLinkBox = document.getElementById('modal-external-link-box');
+            const modalUrlText = document.getElementById('modal-url-text');
+            const modalExternalLinkBtn = document.getElementById('modal-external-link-btn');
 
             let currentLessonKey = null;
             let lastFocusedTrigger = null;
 
             function openLessonModal(lessonKey, triggerEl) {
-                const data = lessonDatabase[lessonKey];
+                const data = getLessonById(lessonKey);
                 if (!data) return;
 
                 currentLessonKey = lessonKey;
@@ -595,12 +951,22 @@
                 document.getElementById('modal-competency').textContent = data.competency;
                 document.getElementById('modal-assessment').textContent = data.assessment;
 
+                // 若此資源包含網頁連結，顯示外部網頁傳送門
+                if (data.url) {
+                    modalUrlText.textContent = data.url;
+                    modalExternalLinkBtn.href = data.url;
+                    modalExternalLinkBox.classList.remove('hidden');
+                } else {
+                    modalExternalLinkBox.classList.add('hidden');
+                    modalExternalLinkBtn.href = '#';
+                }
+
                 const stepsList = document.getElementById('modal-steps');
                 stepsList.innerHTML = '';
                 data.steps.forEach((step) => {
                     const li = document.createElement('li');
                     li.className = 'flex items-start gap-2.5';
-                    li.innerHTML = `<i class="fa-solid fa-caret-right text-skybrand-600 mt-1 shrink-0" aria-hidden="true"></i><span>${step}</span>`;
+                    li.innerHTML = `<i class="fa-solid fa-caret-right text-skybrand-600 mt-1 shrink-0" aria-hidden="true"></i><span>${escapeHtml(step)}</span>`;
                     stepsList.appendChild(li);
                 });
 
@@ -609,7 +975,6 @@
                 lessonModal.classList.add('flex');
                 document.body.style.overflow = 'hidden';
 
-                // 開啟時將焦點移至關閉按鈕，符合無障礙規範
                 closeModalBtn.focus();
             }
 
@@ -619,39 +984,38 @@
                 lessonModal.classList.remove('flex');
                 document.body.style.overflow = '';
 
-                // 關閉時將焦點還原至原觸發按鈕
                 if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === 'function') {
                     lastFocusedTrigger.focus();
                 }
             }
 
-            openLessonBtns.forEach((btn) => {
-                btn.addEventListener('click', () => {
-                    openLessonModal(btn.dataset.lessonId, btn);
-                });
+            // 使用事件委派監聽所有卡片上的「預覽詳情」與「刪除」按鈕
+            curriculumGrid.addEventListener('click', (e) => {
+                const previewBtn = e.target.closest('.open-lesson-btn');
+                if (previewBtn) {
+                    openLessonModal(previewBtn.dataset.lessonId, previewBtn);
+                    return;
+                }
+
+                const deleteBtn = e.target.closest('.delete-custom-btn');
+                if (deleteBtn) {
+                    openDeleteConfirmModal(deleteBtn.dataset.deleteId, deleteBtn);
+                }
             });
 
             closeModalBtn.addEventListener('click', closeLessonModal);
             closeModalFooterBtn.addEventListener('click', closeLessonModal);
 
-            // 點擊 Modal 外部遮罩關閉
             lessonModal.addEventListener('click', (e) => {
                 if (e.target === lessonModal) {
                     closeLessonModal();
                 }
             });
 
-            // 按下 ESC 鍵關閉 Modal
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && !lessonModal.classList.contains('hidden')) {
-                    closeLessonModal();
-                }
-            });
-
-            // 下載 UTF-8 BOM 編碼之 .txt 教案大綱檔案（防止 Windows 記事本亂碼）
+            // 下載 UTF-8 BOM 編碼之 .txt 教案大綱檔案
             downloadLessonBtn.addEventListener('click', () => {
-                if (!currentLessonKey || !lessonDatabase[currentLessonKey]) return;
-                const data = lessonDatabase[currentLessonKey];
+                const data = getLessonById(currentLessonKey);
+                if (!data) return;
 
                 const lines = [
                     '============================================================',
@@ -661,6 +1025,7 @@
                     `【單元名稱】${data.title}`,
                     `【適用年段】${data.grade}`,
                     `【建議節數】${data.duration}`,
+                    ...(data.url ? [`【教學網頁】${data.url}`] : []),
                     `【核心素養】${data.competency}`,
                     '',
                     '------------------------------------------------------------',
@@ -677,7 +1042,6 @@
                     '匯出時間：' + new Date().toLocaleString('zh-TW')
                 ];
 
-                // 加入 \uFEFF UTF-8 BOM 標記
                 const content = '\uFEFF' + lines.join('\r\n');
                 const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
                 const url = URL.createObjectURL(blob);
@@ -691,6 +1055,279 @@
 
                 downloadFeedback.classList.remove('hidden');
             });
+
+            /* ----------------------------------------------------------------
+               6. 匯入新網頁連結 Modal 與表單驗證、JSON 備份還原邏輯
+            ---------------------------------------------------------------- */
+            const importModal = document.getElementById('import-modal');
+            const openImportBtns = [
+                document.getElementById('open-import-modal-btn'),
+                document.getElementById('header-import-btn'),
+                document.getElementById('mobile-import-btn')
+            ].filter(Boolean);
+            const closeImportModalBtn = document.getElementById('close-import-modal-btn');
+            const cancelImportBtn = document.getElementById('cancel-import-btn');
+            const importForm = document.getElementById('import-resource-form');
+            const importFormError = document.getElementById('import-form-error');
+            const importFormErrorText = document.getElementById('import-form-error-text');
+            const fillSampleBtn = document.getElementById('fill-sample-btn');
+            const exportJsonBtn = document.getElementById('export-json-btn');
+            const importJsonFileInput = document.getElementById('import-json-file');
+
+            let importTriggerEl = null;
+
+            function openImportModal(triggerEl) {
+                importTriggerEl = triggerEl || document.activeElement;
+                importFormError.classList.add('hidden');
+                customCountEl.textContent = String(customResources.length);
+                importModal.classList.remove('hidden');
+                importModal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('input-title').focus();
+            }
+
+            function closeImportModal() {
+                if (importModal.classList.contains('hidden')) return;
+                importModal.classList.add('hidden');
+                importModal.classList.remove('flex');
+                document.body.style.overflow = '';
+                if (importTriggerEl && typeof importTriggerEl.focus === 'function') {
+                    importTriggerEl.focus();
+                }
+            }
+
+            openImportBtns.forEach((btn) => {
+                btn.addEventListener('click', () => openImportModal(btn));
+            });
+
+            closeImportModalBtn.addEventListener('click', closeImportModal);
+            cancelImportBtn.addEventListener('click', closeImportModal);
+
+            importModal.addEventListener('click', (e) => {
+                if (e.target === importModal) {
+                    closeImportModal();
+                }
+            });
+
+            // 一鍵帶入繪本網址範例方便教師測試
+            fillSampleBtn.addEventListener('click', () => {
+                document.getElementById('input-category').value = 'chinese';
+                document.getElementById('input-grade').value = '中年級・數位繪本共讀';
+                document.getElementById('input-title').value = '數位兒童繪本故事館：線上共讀與語文表達';
+                document.getElementById('input-url').value = 'https://lioneer32232002-commits.github.io/kids-picture-books/';
+                document.getElementById('input-summary').value = '整合線上兒童數位繪本與朗讀引導，適合課堂大螢幕共讀及學生平板自主閱讀延伸討論。';
+                document.getElementById('input-notes').value = '1. 【共讀暖身】展示繪本封面與標題，引導學生預測故事情節。\n2. 【深入閱讀】逐頁導讀並提問角色情緒與關鍵事件。\n3. 【延伸發表】請學生分享最喜歡的段落並完成閱讀心得單。';
+                importFormError.classList.add('hidden');
+            });
+
+            function showImportError(msg) {
+                importFormErrorText.textContent = msg;
+                importFormError.classList.remove('hidden');
+            }
+
+            importForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                importFormError.classList.add('hidden');
+
+                const categoryKey = document.getElementById('input-category').value;
+                const grade = document.getElementById('input-grade').value.trim() || '自編數位教材';
+                const title = document.getElementById('input-title').value.trim();
+                const url = document.getElementById('input-url').value.trim();
+                const summary = document.getElementById('input-summary').value.trim();
+                const notes = document.getElementById('input-notes').value.trim();
+
+                if (!title) {
+                    showImportError('請輸入「教學資源標題」。');
+                    document.getElementById('input-title').focus();
+                    return;
+                }
+
+                if (!url || !/^https?:\/\/.+/i.test(url)) {
+                    showImportError('請輸入有效的網頁連結網址（必須以 http:// 或 https:// 開頭）。');
+                    document.getElementById('input-url').focus();
+                    return;
+                }
+
+                try {
+                    new URL(url);
+                } catch (_) {
+                    showImportError('網址格式不正確，請確認是否包含完整網域名稱。');
+                    document.getElementById('input-url').focus();
+                    return;
+                }
+
+                if (!summary) {
+                    showImportError('請輸入「課程資源簡介」，方便日後備課辨識。');
+                    document.getElementById('input-summary').focus();
+                    return;
+                }
+
+                const newItem = {
+                    id: 'custom-' + Date.now(),
+                    categoryKey: categoryKey === 'math' ? 'math' : 'chinese',
+                    grade,
+                    title,
+                    url,
+                    summary,
+                    notes,
+                    createdAt: new Date().toISOString()
+                };
+
+                customResources.unshift(newItem);
+                saveCustomResources(customResources);
+                renderCustomCards();
+
+                importForm.reset();
+                document.getElementById('input-grade').value = '六年級・自編數位教材';
+                closeImportModal();
+                showToast(`已成功匯入「${newItem.title}」至課程資源庫！`);
+            });
+
+            // 匯出 JSON 備份檔
+            exportJsonBtn.addEventListener('click', () => {
+                if (customResources.length === 0) {
+                    showImportError('目前尚無任何自訂網頁連結可供匯出。');
+                    return;
+                }
+                const jsonStr = JSON.stringify(customResources, null, 2);
+                const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `新埔國小_自訂教學連結備份_${new Date().toISOString().slice(0, 10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast(`已匯出 ${customResources.length} 筆自訂網頁連結備份檔！`);
+            });
+
+            // 還原 / 匯入 JSON 備份檔
+            importJsonFileInput.addEventListener('change', (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    try {
+                        const parsed = JSON.parse(event.target.result);
+                        if (!Array.isArray(parsed)) {
+                            throw new Error('格式非陣列');
+                        }
+
+                        const validItems = parsed.filter(
+                            (item) => item && typeof item.title === 'string' && typeof item.url === 'string' && /^https?:\/\//i.test(item.url)
+                        ).map((item, idx) => ({
+                            id: item.id || `custom-imported-${Date.now()}-${idx}`,
+                            categoryKey: item.categoryKey === 'math' ? 'math' : 'chinese',
+                            grade: item.grade || '自編數位教材',
+                            title: item.title.trim(),
+                            url: item.url.trim(),
+                            summary: (item.summary || '匯入之數位教學網頁資源').trim(),
+                            notes: (item.notes || '').trim(),
+                            createdAt: item.createdAt || new Date().toISOString()
+                        }));
+
+                        if (validItems.length === 0) {
+                            showImportError('備份檔中找不到有效的教學網頁連結資料。');
+                            return;
+                        }
+
+                        // 依網址與標題去重合併
+                        const existingSignatures = new Set(customResources.map((r) => `${r.title}|${r.url}`));
+                        let addedCount = 0;
+                        validItems.forEach((item) => {
+                            const sig = `${item.title}|${item.url}`;
+                            if (!existingSignatures.has(sig)) {
+                                customResources.push(item);
+                                existingSignatures.add(sig);
+                                addedCount++;
+                            }
+                        });
+
+                        saveCustomResources(customResources);
+                        renderCustomCards();
+                        closeImportModal();
+                        showToast(`備份還原完成！共新增 ${addedCount} 筆不重複的教學網頁連結。`);
+                    } catch (_) {
+                        showImportError('無法解析 JSON 備份檔案，請確認檔案格式是否正確。');
+                    } finally {
+                        importJsonFileInput.value = '';
+                    }
+                };
+                reader.readAsText(file, 'utf-8');
+            });
+
+            /* ----------------------------------------------------------------
+               7. 刪除確認對話框 Modal
+            ---------------------------------------------------------------- */
+            const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+            const deleteModalDesc = document.getElementById('delete-modal-desc');
+            const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+            const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+
+            let pendingDeleteId = null;
+            let deleteTriggerEl = null;
+
+            function openDeleteConfirmModal(id, triggerEl) {
+                const target = customResources.find((r) => r.id === id);
+                if (!target) return;
+
+                pendingDeleteId = id;
+                deleteTriggerEl = triggerEl || document.activeElement;
+                deleteModalDesc.textContent = `確定要從課程資源庫移除「${target.title}」嗎？移除後將無法復原。`;
+
+                deleteConfirmModal.classList.remove('hidden');
+                deleteConfirmModal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                cancelDeleteBtn.focus();
+            }
+
+            function closeDeleteConfirmModal() {
+                if (deleteConfirmModal.classList.contains('hidden')) return;
+                deleteConfirmModal.classList.add('hidden');
+                deleteConfirmModal.classList.remove('flex');
+                document.body.style.overflow = '';
+                pendingDeleteId = null;
+                if (deleteTriggerEl && typeof deleteTriggerEl.focus === 'function') {
+                    deleteTriggerEl.focus();
+                }
+            }
+
+            cancelDeleteBtn.addEventListener('click', closeDeleteConfirmModal);
+            deleteConfirmModal.addEventListener('click', (e) => {
+                if (e.target === deleteConfirmModal) {
+                    closeDeleteConfirmModal();
+                }
+            });
+
+            confirmDeleteBtn.addEventListener('click', () => {
+                if (!pendingDeleteId) return;
+                const removedItem = customResources.find((r) => r.id === pendingDeleteId);
+                customResources = customResources.filter((r) => r.id !== pendingDeleteId);
+                saveCustomResources(customResources);
+                renderCustomCards();
+                closeDeleteConfirmModal();
+                if (removedItem) {
+                    showToast(`已移除「${removedItem.title}」。`);
+                }
+            });
+
+            // 全域 ESC 鍵關閉任何開啟中的 Modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (!deleteConfirmModal.classList.contains('hidden')) {
+                        closeDeleteConfirmModal();
+                    } else if (!importModal.classList.contains('hidden')) {
+                        closeImportModal();
+                    } else if (!lessonModal.classList.contains('hidden')) {
+                        closeLessonModal();
+                    }
+                }
+            });
+
+            // 初始化渲染已儲存的自訂教學連結卡片
+            renderCustomCards();
         })();
     </script>
 </body>
