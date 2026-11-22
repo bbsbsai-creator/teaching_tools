@@ -3,59 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="新埔國小教學工作坊智彬數位教學，提供臺灣國小各領域優質教案、班級經營工具、課堂抽籤器與計時器。">
+    <meta name="description" content="新埔國小教學工作坊｜智彬數位教學，提供國小教師專業素養導向課程資源庫與教案大綱預覽下載服務。">
     <title>新埔國小教學工作坊 | 智彬數位教學</title>
-    
-    <!-- Google Fonts: Noto Sans TC 繁體中文思源黑體 -->
+
+    <!-- Google Fonts: Noto Sans TC -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <!-- Font Awesome 6 圖示庫 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome 圖示庫 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- 自訂 Tailwind 色票與字體設定 -->
+    <!-- Tailwind 自訂專業沉穩教育色系設定 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
                     },
                     colors: {
-                        // 莫蘭迪藍系列 (主色調)
-                        morandi: {
-                            50: '#f3f6f8',
-                            100: '#e3eaf0',
-                            200: '#c8d6e2',
-                            300: '#a2b9cd',
-                            400: '#7696b3',
-                            500: '#587999', // 核心莫蘭迪藍
-                            600: '#45617e',
-                            700: '#394f67',
-                            800: '#324457',
-                            900: '#2d3b4a',
+                        navy: {
+                            50: '#F1F5F9',
+                            100: '#E2E8F0',
+                            200: '#CBD5E1',
+                            300: '#94A3B8',
+                            400: '#47698F',
+                            500: '#2B4C73',
+                            600: '#1E3A5F',
+                            700: '#152944',
+                            800: '#0F1E33',
+                            900: '#091322',
                         },
-                        // 溫暖米黃系列 (背景與卡片襯底)
-                        warmcream: {
-                            50: '#fdfcf9',
-                            100: '#faf6ee',
-                            200: '#f3ead8',
-                            300: '#e8d7b9',
-                            400: '#dabf93',
+                        tealcalm: {
+                            50: '#F0F6F7',
+                            100: '#DCE9EB',
+                            200: '#B8D3D7',
+                            400: '#4A8C91',
+                            500: '#2E6F73',
+                            600: '#23565A',
                         },
-                        // 薄荷綠系列 (活力點綴與重點提示)
-                        mint: {
-                            50: '#f2fbf8',
-                            100: '#d5f3e9',
-                            200: '#ace6d3',
-                            300: '#7ad2b8',
-                            400: '#4eb69a',
-                            500: '#369a81',
-                            600: '#297c68',
+                        mist: {
+                            50: '#F8FAFC',
+                            100: '#F4F6F9',
+                            200: '#DCE2EA',
+                            300: '#CBD3DF',
                         }
                     }
                 }
@@ -63,1091 +58,628 @@
         }
     </script>
 
-    <!-- 輔助無障礙與微互動樣式 -->
     <style>
-        /* 焦點外框無障礙強化 */
-        :focus-visible {
-            outline: 3px solid #4eb69a;
+        :root {
+            --color-navy-primary: #1E3A5F;
+            --color-navy-hover: #152944;
+            --color-teal-accent: #2E6F73;
+            --color-bg-mist: #F4F6F9;
+            --color-border-mist: #DCE2EA;
+            --color-text-primary: #1E293B;
+            --color-text-secondary: #475569;
+        }
+
+        body {
+            background-color: var(--color-bg-mist);
+            color: var(--color-text-primary);
+            font-feature-settings: "palt";
+        }
+
+        /* 無障礙鍵盤焦點指示器 (WCAG 2.1 AA) */
+        *:focus-visible {
+            outline: 3px solid var(--color-teal-accent);
             outline-offset: 2px;
         }
-        /* 自訂捲軸外觀 */
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        /* 卡片平滑進場微動畫 */
+        .curriculum-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
-        ::-webkit-scrollbar-track {
-            background: #faf6ee;
+        .curriculum-card:hover {
+            transform: translateY(-2px);
         }
-        ::-webkit-scrollbar-thumb {
-            background: #a2b9cd;
-            border-radius: 4px;
+
+        /* 自訂細緻捲軸（適用於教案預覽視窗） */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #587999;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F4F6F9;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
         }
     </style>
 </head>
-<body class="bg-warmcream-50 text-slate-800 font-sans antialiased selection:bg-mint-200 selection:text-morandi-900">
+<body class="antialiased selection:bg-tealcalm-100 selection:text-navy-800 flex flex-col min-h-screen">
 
-    <!-- 無障礙跳至主要內容連結 -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-morandi-600 focus:text-white focus:rounded-lg shadow-lg">
-        跳至主要內容
+    <!-- 無障礙跳至主內容捷徑 -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-navy-600 focus:text-white focus:rounded-lg focus:shadow-lg">
+        跳至主要內容區
     </a>
 
-    <!-- ==================== 1. 頂部導覽列 (Header & Nav) ==================== -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-warmcream-200 shadow-sm">
+    <!-- ==================== 1. 頂部導覽列 (Sticky Header) ==================== -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-mist-200 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16 sm:h-20">
-                <!-- 網站標誌與標題 -->
-                <a href="#" class="flex items-center gap-3 group" aria-label="新埔國小教學工作坊首頁">
-                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-morandi-500 to-mint-500 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-                        <i class="fa-solid fa-sun text-lg sm:text-xl"></i>
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- 品牌識別區 -->
+                <a href="#main-content" class="flex items-center gap-3 group rounded-xl p-1">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-navy-600 flex items-center justify-center text-white shadow-sm group-hover:bg-navy-700 transition-colors">
+                        <i class="fa-solid fa-book-bookmark text-lg sm:text-xl" aria-hidden="true"></i>
                     </div>
                     <div>
-                        <span class="block text-base sm:text-lg font-bold text-morandi-800 tracking-wide">新埔國小教學工作坊</span>
-                        <span class="block text-xs text-morandi-500 font-medium">新埔國小 · 智彬數位教學</span>
+                        <span class="block text-base sm:text-lg font-bold tracking-tight text-navy-800 leading-tight">
+                            新埔國小教學工作坊
+                        </span>
+                        <span class="block text-xs font-medium text-tealcalm-500 tracking-wide">
+                            智彬數位教學・國小數位教學平台
+                        </span>
                     </div>
                 </a>
 
                 <!-- 桌面版導覽連結 -->
-                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="主導覽列">
-                    <a href="#curriculum" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-morandi-600 hover:bg-morandi-50 transition-colors">
-                        <i class="fa-solid fa-book-open mr-1.5 text-morandi-400"></i>課程資源
-                    </a>
-                    <a href="#classroom-tools" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-morandi-600 hover:bg-morandi-50 transition-colors">
-                        <i class="fa-solid fa-chalkboard-user mr-1.5 text-mint-500"></i>班級經營
-                    </a>
-                    <a href="#classroom-tools" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-morandi-600 hover:bg-morandi-50 transition-colors">
-                        <i class="fa-solid fa-toolbox mr-1.5 text-morandi-400"></i>數位工具箱
-                    </a>
-                    <a href="#announcements" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-morandi-600 hover:bg-morandi-50 transition-colors">
-                        <i class="fa-solid fa-bullhorn mr-1.5 text-amber-500"></i>最新公告
-                    </a>
-                    <a href="#footer-contact" class="ml-2 px-4 py-2 rounded-full text-sm font-semibold bg-morandi-500 text-white hover:bg-morandi-600 shadow-sm transition-all">
-                        <i class="fa-solid fa-envelope mr-1.5"></i>親師聯絡
+                <nav class="hidden md:flex items-center gap-3" aria-label="主導覽列">
+                    <a href="#curriculum" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-navy-700 hover:bg-navy-50 transition-colors inline-flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-tealcalm-500" aria-hidden="true"></i>
+                        領域課程資源庫
                     </a>
                 </nav>
 
                 <!-- 手機版漢堡選單按鈕 -->
-                <button id="mobile-menu-btn" type="button" class="md:hidden p-2.5 rounded-xl text-morandi-700 hover:bg-morandi-100 transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="開啟主選單">
-                    <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
+                <button id="mobile-menu-btn" type="button" class="md:hidden p-2.5 rounded-xl text-navy-700 hover:bg-navy-50 transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="開啟主選單">
+                    <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
 
         <!-- 手機版展開選單 -->
-        <nav id="mobile-menu" class="hidden md:hidden bg-white border-t border-warmcream-200 px-4 pt-2 pb-4 space-y-1 shadow-lg" aria-label="行動版導覽列">
-            <a href="#curriculum" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-morandi-50 hover:text-morandi-700">
-                <i class="fa-solid fa-book-open w-6 text-morandi-500"></i>課程資源
-            </a>
-            <a href="#classroom-tools" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-morandi-50 hover:text-morandi-700">
-                <i class="fa-solid fa-chalkboard-user w-6 text-mint-500"></i>班級經營
-            </a>
-            <a href="#classroom-tools" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-morandi-50 hover:text-morandi-700">
-                <i class="fa-solid fa-toolbox w-6 text-morandi-500"></i>數位工具箱
-            </a>
-            <a href="#announcements" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-morandi-50 hover:text-morandi-700">
-                <i class="fa-solid fa-bullhorn w-6 text-amber-500"></i>最新公告
-            </a>
-            <a href="#footer-contact" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-semibold bg-morandi-500 text-white text-center mt-2">
-                <i class="fa-solid fa-envelope mr-2"></i>親師聯絡
+        <nav id="mobile-menu" class="hidden md:hidden bg-white border-t border-mist-200 px-4 py-3 shadow-lg" aria-label="行動版導覽列">
+            <a href="#curriculum" class="mobile-nav-link flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-navy-50 hover:text-navy-700 transition-colors">
+                <i class="fa-solid fa-layer-group text-tealcalm-500" aria-hidden="true"></i>
+                領域課程資源庫
             </a>
         </nav>
     </header>
 
-    <!-- 主要內容區 -->
-    <main id="main-content">
+    <!-- ==================== 主要內容區 ==================== -->
+    <main id="main-content" class="flex-grow">
 
-        <!-- ==================== 2. 主視覺橫幅 (Hero Section) ==================== -->
-        <section class="relative overflow-hidden bg-gradient-to-br from-warmcream-100 via-warmcream-50 to-morandi-100/60 py-14 sm:py-20 lg:py-24 border-b border-warmcream-200">
-            <!-- 裝飾性背景圓形 -->
-            <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-mint-200/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
-            <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-morandi-200/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
+        <!-- ==================== 2. 簡潔主視覺標題區塊 (Hero Section) ==================== -->
+        <section class="relative overflow-hidden bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 py-14 sm:py-20 border-b border-navy-800 text-white">
+            <!-- 低調沉穩的幾何光暈裝飾 -->
+            <div class="absolute -top-28 -right-28 w-96 h-96 rounded-full bg-tealcalm-500/15 blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute -bottom-28 -left-28 w-96 h-96 rounded-full bg-navy-400/20 blur-3xl pointer-events-none" aria-hidden="true"></div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                    <!-- 左側文字區 -->
-                    <div class="lg:col-span-7 text-center lg:text-left">
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-mint-100 text-mint-600 text-xs sm:text-sm font-semibold mb-5 border border-mint-200">
-                            <span class="w-2 h-2 rounded-full bg-mint-500 animate-pulse"></span>
-                            115 學年度第一學期・素養導向教學共備平台
-                        </div>
-                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-morandi-900 leading-tight mb-5">
-                            點亮孩子的學習熱情，<br class="hidden sm:inline">
-                            打造<span class="text-morandi-600 underline decoration-mint-400 decoration-4 underline-offset-4">溫暖高效</span>的數位課堂
-                        </h1>
-                        <p class="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
-                            專為國小教育現場量身設計，整合十二年國教核心素養教案、學習單模板與即時課堂互動工具，減輕教師備課負擔，讓每一堂課都充滿溫度與驚喜。
-                        </p>
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                            <a href="#curriculum" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-morandi-600 hover:bg-morandi-700 text-white font-semibold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-compass"></i>
-                                探索課程資源
-                            </a>
-                            <a href="#classroom-tools" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white hover:bg-mint-50 text-morandi-700 border border-morandi-200 font-semibold text-base shadow-sm transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-wand-magic-sparkles text-mint-500"></i>
-                                開啟課堂互動工具
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- 右側教育意象插圖卡片 -->
-                    <div class="lg:col-span-5">
-                        <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 sm:p-8 shadow-xl border border-warmcream-200 relative">
-                            <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
-                                        <i class="fa-solid fa-lightbulb"></i>
-                                    </div>
-                                    <div>
-                                        <h2 class="font-bold text-morandi-800 text-sm sm:text-base">教師共備快訊</h2>
-                                        <p class="text-xs text-slate-500">本週精選教學亮點</p>
-                                    </div>
-                                </div>
-                                <span class="px-2.5 py-1 rounded-md bg-morandi-50 text-morandi-600 text-xs font-semibold">全學年適用</span>
-                            </div>
-
-                            <ul class="space-y-4 text-sm">
-                                <li class="flex items-start gap-3 p-3 rounded-2xl bg-warmcream-50 border border-warmcream-200">
-                                    <span class="w-7 h-7 rounded-lg bg-mint-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">01</span>
-                                    <div>
-                                        <p class="font-semibold text-slate-800">跨領域閱讀素養學習單更新</p>
-                                        <p class="text-xs text-slate-500 mt-0.5">新增中年級繪本提問單與心智圖引導模板</p>
-                                    </div>
-                                </li>
-                                <li class="flex items-start gap-3 p-3 rounded-2xl bg-warmcream-50 border border-warmcream-200">
-                                    <span class="w-7 h-7 rounded-lg bg-morandi-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">02</span>
-                                    <div>
-                                        <p class="font-semibold text-slate-800">免安裝課堂抽籤與計時工具</p>
-                                        <p class="text-xs text-slate-500 mt-0.5">支援大螢幕投影，一鍵切換不重複抽籤模式</p>
-                                    </div>
-                                </li>
-                                <li class="flex items-start gap-3 p-3 rounded-2xl bg-warmcream-50 border border-warmcream-200">
-                                    <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">03</span>
-                                    <div>
-                                        <p class="font-semibold text-slate-800">期中評量複習策略與家長溝通包</p>
-                                        <p class="text-xs text-slate-500 mt-0.5">提供聯絡簿小叮嚀範本與學習檢核表</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-tealcalm-100 text-xs sm:text-sm font-medium mb-6 border border-white/15 backdrop-blur-xs">
+                    <span class="w-2 h-2 rounded-full bg-tealcalm-400" aria-hidden="true"></span>
+                    115 學年度・素養導向數位教學共備平台
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    新埔國小教學工作坊<br class="sm:hidden">
+                    <span class="text-tealcalm-200">精選課程資源庫</span>
+                </h1>
+                <p class="text-base sm:text-lg text-navy-100 leading-relaxed mb-8 max-w-2xl mx-auto">
+                    專為國小教育現場量身規劃，彙整十二年國教核心素養教案、完整教學流程大綱與學習評量重點，支援一鍵線上預覽與純文字教案下載。
+                </p>
+                <div class="flex justify-center">
+                    <a href="#curriculum" class="px-7 py-3.5 rounded-xl bg-tealcalm-500 hover:bg-tealcalm-600 text-white font-semibold text-base shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5">
+                        <i class="fa-solid fa-compass" aria-hidden="true"></i>
+                        瀏覽領域課程資源
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== 3. 課程資源區 (Curriculum Resources) ==================== -->
-        <section id="curriculum" class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="curriculum-heading">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <!-- ==================== 3. 領域課程資源庫 (Curriculum Resources) ==================== -->
+        <section id="curriculum" class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="curriculum-heading">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
                 <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-mint-600 bg-mint-50 px-3 py-1 rounded-full border border-mint-200">Curriculum Resources</span>
-                    <h2 id="curriculum-heading" class="text-2xl sm:text-3xl font-bold text-morandi-900 mt-3">領域課程資源庫</h2>
-                    <p class="text-slate-600 mt-2 text-sm sm:text-base">依據十二年國教課綱分類，點擊「教案預覽與下載」即可檢視完整教學流程與學習單大綱。</p>
+                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-tealcalm-600 mb-2">
+                        <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+                        CURRICULUM REPOSITORY
+                    </div>
+                    <h2 id="curriculum-heading" class="text-2xl sm:text-3xl font-bold text-slate-800">
+                        領域課程資源庫
+                    </h2>
+                    <p class="text-slate-600 mt-1.5 text-sm sm:text-base">
+                        點選領域標籤篩選課程單元，可開啟詳細教案大綱預覽並匯出備課文字檔。
+                    </p>
                 </div>
 
-                <!-- 領域篩選按鈕列 -->
-                <div class="flex flex-wrap gap-2" role="tablist" aria-label="課程領域篩選">
-                    <button type="button" class="filter-btn active px-4 py-2 rounded-xl text-sm font-semibold bg-morandi-600 text-white shadow-sm transition-all" data-filter="all">
+                <!-- 領域篩選標籤按鈕群組 -->
+                <div class="flex flex-wrap gap-2" role="group" aria-label="課程領域篩選">
+                    <button type="button" data-filter="all" aria-pressed="true" class="filter-btn active px-4 py-2.5 rounded-xl text-sm font-semibold bg-navy-600 text-white shadow-xs transition-all">
                         全部領域
                     </button>
-                    <button type="button" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-600 hover:bg-morandi-50 border border-slate-200 transition-all" data-filter="chinese">
+                    <button type="button" data-filter="chinese" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-mist-200 hover:bg-navy-50 hover:text-navy-700 transition-all">
                         國語文
                     </button>
-                    <button type="button" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-600 hover:bg-morandi-50 border border-slate-200 transition-all" data-filter="math">
+                    <button type="button" data-filter="math" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-mist-200 hover:bg-navy-50 hover:text-navy-700 transition-all">
                         數學
                     </button>
                 </div>
             </div>
 
-            <!-- 響應式卡片網格 (CSS Grid：保留國語文與數學兩大核心領域) -->
-            <div id="curriculum-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <!-- 卡片 1：國語文 -->
-                <article class="curriculum-card bg-white rounded-2xl border border-warmcream-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group" data-category="chinese">
+            <!-- 課程卡片網格（雙欄沉穩專業排版） -->
+            <div id="curriculum-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+
+                <!-- 卡片 1：國語文（五年級） -->
+                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-navy-200 flex flex-col justify-between overflow-hidden group" data-category="chinese">
                     <div>
-                        <!-- 頂部色條與領域標籤 -->
-                        <div class="h-2 bg-rose-400"></div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between gap-2 mb-3">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-rose-50 text-rose-600 border border-rose-100">
-                                    <i class="fa-solid fa-feather-pointed mr-1"></i>國語文領域
+                        <div class="h-1.5 bg-navy-600"></div>
+                        <div class="p-6 sm:p-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-navy-50 text-navy-700 border border-navy-100 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-pen-nib text-navy-500" aria-hidden="true"></i>
+                                    國語文領域
                                 </span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-warmcream-100 text-slate-600">
-                                    中年級（三、四年級）
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                    五年級上學期・4 節課
                                 </span>
                             </div>
-                            <h3 class="text-lg font-bold text-morandi-900 mb-2 group-hover:text-morandi-600 transition-colors">
-                                繪本裡的秘密花園：故事結構與情感表達
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-navy-600 transition-colors leading-snug">
+                                閱讀理解策略：心智圖與關鍵句萃取
                             </h3>
-                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                                透過繪本共讀引導學生運用「起承轉合」拆解故事情節，練習感官摹寫句子，並創作屬於自己的小短文。
+                            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
+                                透過數位心智圖工具拆解記敘文與說明文段落結構，引導學生精準抓取主旨與關鍵訊息，建立高層次摘要能力。
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 pb-6 pt-2 border-t border-slate-50">
-                        <button type="button" onclick="openLessonModal('chinese-1')" class="w-full py-2.5 px-4 rounded-xl bg-morandi-50 hover:bg-morandi-600 text-morandi-700 hover:text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-eye"></i>
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
+                        <button type="button" data-lesson-id="chinese-1" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                            <i class="fa-solid fa-eye" aria-hidden="true"></i>
                             教案預覽與下載
                         </button>
                     </div>
                 </article>
 
-                <!-- 卡片 2：數學 -->
-                <article class="curriculum-card bg-white rounded-2xl border border-warmcream-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group" data-category="math">
+                <!-- 卡片 2：數學（四年級） -->
+                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-tealcalm-200 flex flex-col justify-between overflow-hidden group" data-category="math">
                     <div>
-                        <div class="h-2 bg-morandi-500"></div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between gap-2 mb-3">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-morandi-50 text-morandi-600 border border-morandi-100">
-                                    <i class="fa-solid fa-shapes mr-1"></i>數學領域
+                        <div class="h-1.5 bg-tealcalm-500"></div>
+                        <div class="p-6 sm:p-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-tealcalm-50 text-tealcalm-600 border border-tealcalm-100 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-shapes text-tealcalm-500" aria-hidden="true"></i>
+                                    數學領域
                                 </span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-warmcream-100 text-slate-600">
-                                    四年級上學期
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                    四年級上學期・4 節課
                                 </span>
                             </div>
-                            <h3 class="text-lg font-bold text-morandi-900 mb-2 group-hover:text-morandi-600 transition-colors">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-tealcalm-600 transition-colors leading-snug">
                                 分數派對大作戰：等值分數與生活應用
                             </h3>
-                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                                結合披薩平分與摺紙操作活動，讓學生具體理解等值分數概念，克服抽象計算恐懼並能解決生活情境題。
+                            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
+                                結合披薩平分與摺紙操作活動，讓學生具體理解等值分數概念，克服抽象計算迷思並能解決生活情境問題。
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 pb-6 pt-2 border-t border-slate-50">
-                        <button type="button" onclick="openLessonModal('math-1')" class="w-full py-2.5 px-4 rounded-xl bg-morandi-50 hover:bg-morandi-600 text-morandi-700 hover:text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-eye"></i>
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
+                        <button type="button" data-lesson-id="math-1" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-tealcalm-500 hover:bg-tealcalm-600 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                            <i class="fa-solid fa-eye" aria-hidden="true"></i>
                             教案預覽與下載
                         </button>
                     </div>
                 </article>
 
-            </div>
-        </section>
-
-        <!-- ==================== 4. 班級經營與互動工具區 (Classroom Tools) ==================== -->
-        <section id="classroom-tools" class="py-16 sm:py-20 bg-morandi-50/70 border-y border-morandi-100" aria-labelledby="tools-heading">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto mb-12">
-                    <span class="text-xs font-bold uppercase tracking-wider text-morandi-600 bg-white px-3.5 py-1 rounded-full border border-morandi-200 shadow-xs">Interactive Classroom Toolkit</span>
-                    <h2 id="tools-heading" class="text-2xl sm:text-3xl font-bold text-morandi-900 mt-3">班級經營與數位工具箱</h2>
-                    <p class="text-slate-600 mt-2 text-sm sm:text-base">專為教室單槍投影設計的即時互動小幫手，無需額外下載軟體，點擊即可使用。</p>
-                </div>
-
-                <!-- 雙欄工具佈局 -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    
-                    <!-- 工具一：隨機抽籤點名器 -->
-                    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-warmcream-200 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-11 h-11 rounded-2xl bg-mint-100 text-mint-600 flex items-center justify-center text-xl">
-                                        <i class="fa-solid fa-dice"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-morandi-900">隨機抽籤點名器</h3>
-                                        <p class="text-xs text-slate-500">課堂發表、分組任務好幫手</p>
-                                    </div>
-                                </div>
-                                <span id="remaining-badge" class="px-3 py-1 rounded-full bg-morandi-100 text-morandi-700 text-xs font-semibold">
-                                    待抽人數：24 人
+                <!-- 卡片 3：國語文（六年級） -->
+                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-navy-200 flex flex-col justify-between overflow-hidden group" data-category="chinese">
+                    <div>
+                        <div class="h-1.5 bg-navy-600"></div>
+                        <div class="p-6 sm:p-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-navy-50 text-navy-700 border border-navy-100 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-pen-nib text-navy-500" aria-hidden="true"></i>
+                                    國語文領域
+                                </span>
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                    六年級上學期・5 節課
                                 </span>
                             </div>
-
-                            <!-- 抽籤結果顯示舞台 -->
-                            <div class="bg-gradient-to-br from-warmcream-100 to-morandi-50 rounded-2xl p-6 sm:p-8 text-center border-2 border-dashed border-morandi-200 mb-6 relative overflow-hidden">
-                                <p class="text-xs font-semibold text-morandi-500 uppercase tracking-widest mb-2">幸運小幫手</p>
-                                <div id="picker-display" class="min-h-[84px] flex flex-col items-center justify-center" aria-live="polite">
-                                    <span class="text-3xl sm:text-4xl font-bold text-morandi-800 tracking-wide">準備抽籤</span>
-                                    <span class="text-sm text-slate-500 mt-1">點擊下方按鈕開始抽取學生</span>
-                                </div>
-                            </div>
-
-                            <!-- 控制選項列 -->
-                            <div class="flex flex-wrap items-center justify-between gap-3 mb-5 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                                <label class="inline-flex items-center gap-2.5 cursor-pointer select-none">
-                                    <input type="checkbox" id="no-repeat-toggle" checked class="w-4 h-4 rounded text-mint-600 focus:ring-mint-500 border-slate-300">
-                                    <span class="text-sm font-medium text-slate-700">不重複抽籤模式</span>
-                                </label>
-                                <div class="flex items-center gap-2">
-                                    <button type="button" id="reset-pool-btn" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors">
-                                        <i class="fa-solid fa-rotate-left mr-1"></i>重置已抽名單
-                                    </button>
-                                    <button type="button" id="toggle-roster-btn" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-morandi-100 text-morandi-700 hover:bg-morandi-200 transition-colors">
-                                        <i class="fa-solid fa-pen-to-square mr-1"></i>編輯名單
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 可折疊的自訂名單編輯區 -->
-                            <div id="roster-editor" class="hidden mb-5 p-4 rounded-2xl bg-warmcream-50 border border-warmcream-300">
-                                <div class="flex items-center justify-between mb-2">
-                                    <label for="student-list-input" class="text-xs font-bold text-morandi-800">
-                                        輸入學生名單（每行一位，建議格式：座號 姓名）
-                                    </label>
-                                    <button type="button" id="load-sample-btn" class="text-xs text-mint-600 hover:underline font-medium">
-                                        載入預設範例名單
-                                    </button>
-                                </div>
-                                <textarea id="student-list-input" rows="4" class="w-full rounded-xl border-slate-300 text-sm p-3 focus:border-morandi-500 focus:ring-morandi-500 bg-white" placeholder="例如：&#10;01 陳宇軒&#10;02 林品妍"></textarea>
-                                <div class="flex justify-end mt-2">
-                                    <button type="button" id="save-roster-btn" class="px-4 py-1.5 rounded-lg bg-morandi-600 text-white text-xs font-semibold hover:bg-morandi-700 transition-colors">
-                                        套用名單
-                                    </button>
-                                </div>
-                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-navy-600 transition-colors leading-snug">
+                                思辨寫作工坊：議論文立場與論據建構
+                            </h3>
+                            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
+                                運用 ORID 焦點討論法與小組辯論支架，引導高年級學生針對校園生活議題提出明確論點、舉例佐證並完成結構化短文。
+                            </p>
                         </div>
-
-                        <!-- 開始抽籤主按鈕 -->
-                        <button type="button" id="draw-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-morandi-600 to-mint-500 hover:from-morandi-700 hover:to-mint-600 text-white font-bold text-lg shadow-md hover:shadow-lg active:scale-[0.99] transition-all flex items-center justify-center gap-2.5">
-                            <i class="fa-solid fa-shuffle"></i>
-                            <span id="draw-btn-text">開始隨機抽籤</span>
+                    </div>
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
+                        <button type="button" data-lesson-id="chinese-2" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                            <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                            教案預覽與下載
                         </button>
                     </div>
+                </article>
 
-                    <!-- 工具二：課堂倒數計時器 -->
-                    <div id="timer-card" class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-warmcream-200 flex flex-col justify-between transition-colors duration-300">
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
-                                        <i class="fa-solid fa-stopwatch"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-morandi-900">課堂分組討論計時器</h3>
-                                        <p class="text-xs text-slate-500">小組討論、隨堂測驗時間掌控</p>
-                                    </div>
-                                </div>
-                                <span id="timer-status-badge" class="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold">
-                                    待機中
+                <!-- 卡片 4：數學（六年級） -->
+                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-tealcalm-200 flex flex-col justify-between overflow-hidden group" data-category="math">
+                    <div>
+                        <div class="h-1.5 bg-tealcalm-500"></div>
+                        <div class="p-6 sm:p-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-tealcalm-50 text-tealcalm-600 border border-tealcalm-100 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-shapes text-tealcalm-500" aria-hidden="true"></i>
+                                    數學領域
+                                </span>
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                    六年級上學期・4 節課
                                 </span>
                             </div>
-
-                            <!-- 倒數時間顯示舞台 -->
-                            <div id="timer-display-box" class="bg-warmcream-100 rounded-2xl p-6 sm:p-8 text-center border border-warmcream-300 mb-6 transition-colors duration-300">
-                                <div id="timer-display" class="text-5xl sm:text-6xl font-bold text-morandi-900 tracking-wider font-mono tabular-nums" aria-live="off">
-                                    05:00
-                                </div>
-                                <!-- 進度條 -->
-                                <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden mt-5">
-                                    <div id="timer-progress-bar" class="bg-mint-500 h-full transition-all duration-300" style="width: 100%"></div>
-                                </div>
-                                <p id="timer-message" class="text-xs sm:text-sm font-medium text-slate-500 mt-3">
-                                    請選擇預設時間或直接點擊開始
-                                </p>
-                            </div>
-
-                            <!-- 快捷時間設定按鈕 -->
-                            <div class="mb-6">
-                                <span class="block text-xs font-semibold text-slate-500 mb-2.5">快速設定時間：</span>
-                                <div class="grid grid-cols-3 gap-3">
-                                    <button type="button" onclick="setTimerMinutes(5)" class="preset-time-btn py-2.5 px-3 rounded-xl border border-morandi-200 bg-morandi-50/60 hover:bg-morandi-100 text-morandi-800 font-semibold text-sm transition-colors">
-                                        5 分鐘
-                                    </button>
-                                    <button type="button" onclick="setTimerMinutes(10)" class="preset-time-btn py-2.5 px-3 rounded-xl border border-morandi-200 bg-morandi-50/60 hover:bg-morandi-100 text-morandi-800 font-semibold text-sm transition-colors">
-                                        10 分鐘
-                                    </button>
-                                    <button type="button" onclick="setTimerMinutes(15)" class="preset-time-btn py-2.5 px-3 rounded-xl border border-morandi-200 bg-morandi-50/60 hover:bg-morandi-100 text-morandi-800 font-semibold text-sm transition-colors">
-                                        15 分鐘
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 計時器操作按鈕列 -->
-                        <div class="grid grid-cols-3 gap-3">
-                            <button type="button" id="timer-start-btn" class="py-3.5 px-4 rounded-2xl bg-mint-500 hover:bg-mint-600 text-white font-bold text-base shadow-sm transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-play"></i>
-                                <span>開始</span>
-                            </button>
-                            <button type="button" id="timer-pause-btn" disabled class="py-3.5 px-4 rounded-2xl bg-amber-400 hover:bg-amber-500 disabled:opacity-40 disabled:cursor-not-allowed text-slate-900 font-bold text-base shadow-sm transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-pause"></i>
-                                <span>暫停</span>
-                            </button>
-                            <button type="button" id="timer-reset-btn" class="py-3.5 px-4 rounded-2xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-base transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-rotate-right"></i>
-                                <span>重設</span>
-                            </button>
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-tealcalm-600 transition-colors leading-snug">
+                                圓周率與圓面積探索：幾何切割與推導
+                            </h3>
+                            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
+                                透過實測圓形物品周長與直徑比值發現圓周率，並以扇形等分拼接為近似長方形的動態演示，直觀推導圓面積公式。
+                            </p>
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== 5. 教學進度與最新公告 (Announcements & Schedule) ==================== -->
-        <section id="announcements" class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="announcements-heading">
-            <div class="mb-10">
-                <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Schedule & Notices</span>
-                <h2 id="announcements-heading" class="text-2xl sm:text-3xl font-bold text-morandi-900 mt-3">學期重要行事曆與教學公告</h2>
-                <p class="text-slate-600 mt-2 text-sm sm:text-base">掌握本學期關鍵教學節點與行政提醒，協助老師妥善規劃課程進度。</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- 左側：學期重要行事曆時間軸 (7欄) -->
-                <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-warmcream-200 shadow-sm">
-                    <h3 class="text-lg font-bold text-morandi-800 mb-6 flex items-center gap-2">
-                        <i class="fa-regular fa-calendar-check text-morandi-500"></i>
-                        115 學年度第一學期重要行事曆
-                    </h3>
-
-                    <div class="relative border-l-2 border-morandi-200 ml-3.5 space-y-7 pb-2">
-                        <!-- 時間軸項目 1 -->
-                        <div class="relative pl-7">
-                            <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-mint-500 ring-4 ring-mint-100"></span>
-                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-mint-50 text-mint-700">第 03 週・09/19 (六)</span>
-                                <span class="text-xs font-medium text-slate-400">全校性活動</span>
-                            </div>
-                            <h4 class="text-base font-bold text-slate-800">全校親師座談會（班親會）</h4>
-                            <p class="text-sm text-slate-600 mt-1">請各班導師於會議前三日上傳班級經營計畫簡報至校務雲端資料夾。</p>
-                        </div>
-
-                        <!-- 時間軸項目 2 -->
-                        <div class="relative pl-7">
-                            <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-morandi-500 ring-4 ring-morandi-100"></span>
-                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-morandi-50 text-morandi-700">第 08 週・10/22 (四)</span>
-                                <span class="text-xs font-medium text-slate-400">戶外教育</span>
-                            </div>
-                            <h4 class="text-base font-bold text-slate-800">中低年級秋季校外教學活動</h4>
-                            <p class="text-sm text-slate-600 mt-1">前往生態教育園區進行戶外踏查，請提醒學生攜帶防曬用品與水壺。</p>
-                        </div>
-
-                        <!-- 時間軸項目 3 -->
-                        <div class="relative pl-7">
-                            <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 ring-4 ring-amber-100"></span>
-                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-amber-50 text-amber-700">第 10 週・11/05 - 11/06</span>
-                                <span class="text-xs font-medium text-slate-400">定期評量</span>
-                            </div>
-                            <h4 class="text-base font-bold text-slate-800">第一次定期學習評量（期中考）</h4>
-                            <p class="text-sm text-slate-600 mt-1">命題教師請於 10/26 前完成雙向細目表與試卷審題繳交作業。</p>
-                        </div>
-
-                        <!-- 時間軸項目 4 -->
-                        <div class="relative pl-7">
-                            <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-rose-400 ring-4 ring-rose-100"></span>
-                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-rose-50 text-rose-700">第 16 週・12/19 (六)</span>
-                                <span class="text-xs font-medium text-slate-400">藝文體育</span>
-                            </div>
-                            <h4 class="text-base font-bold text-slate-800">新埔校慶運動會暨教學成果展</h4>
-                            <p class="text-sm text-slate-600 mt-1">各學年健康操預演與學生優良作品靜態展覽佈置開始。</p>
-                        </div>
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
+                        <button type="button" data-lesson-id="math-2" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-tealcalm-500 hover:bg-tealcalm-600 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                            <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                            教案預覽與下載
+                        </button>
                     </div>
-                </div>
+                </article>
 
-                <!-- 右側：教務處與教學工作坊最新公告 (5欄) -->
-                <div class="lg:col-span-5 bg-warmcream-100 rounded-3xl p-6 sm:p-8 border border-warmcream-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold text-morandi-800 mb-5 flex items-center gap-2">
-                            <i class="fa-solid fa-clipboard-list text-amber-600"></i>
-                            最新教學行政公告
-                        </h3>
-
-                        <div class="space-y-3.5">
-                            <div class="bg-white p-4 rounded-2xl border border-warmcream-200 shadow-2xs">
-                                <div class="flex items-center justify-between text-xs mb-1.5">
-                                    <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-bold">重要</span>
-                                    <time datetime="2026-11-18" class="text-slate-400">2026/11/18</time>
-                                </div>
-                                <h4 class="font-bold text-sm text-slate-800">公開授課觀議課紀錄表數位化線上填報通知</h4>
-                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">本學期教師專業發展公開授課，請於觀課後一週內完成線上表單回饋。</p>
-                            </div>
-
-                            <div class="bg-white p-4 rounded-2xl border border-warmcream-200 shadow-2xs">
-                                <div class="flex items-center justify-between text-xs mb-1.5">
-                                    <span class="px-2 py-0.5 rounded bg-mint-100 text-mint-700 font-bold">研習</span>
-                                    <time datetime="2026-11-12" class="text-slate-400">2026/11/12</time>
-                                </div>
-                                <h4 class="font-bold text-sm text-slate-800">週三進修：AI 輔助差異化教學工作坊報名</h4>
-                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">邀請資訊輔導團講師分享如何快速產出多層次閱讀理解題組。</p>
-                            </div>
-
-                            <div class="bg-white p-4 rounded-2xl border border-warmcream-200 shadow-2xs">
-                                <div class="flex items-center justify-between text-xs mb-1.5">
-                                    <span class="px-2 py-0.5 rounded bg-morandi-100 text-morandi-700 font-bold">設備</span>
-                                    <time datetime="2026-11-05" class="text-slate-400">2026/11/05</time>
-                                </div>
-                                <h4 class="font-bold text-sm text-slate-800">平板電腦充電車借用系統更新說明</h4>
-                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">三年級與四年級行動學習載具已完成系統更新，歡迎各領域預約借用。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 pt-4 border-t border-warmcream-300 text-center">
-                        <p class="text-xs text-slate-500">
-                            <i class="fa-solid fa-circle-info mr-1 text-morandi-500"></i>
-                            如需上傳自編教案分享，請聯繫教務處教學組（分機 211）
-                        </p>
-                    </div>
-                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- ==================== 6. 頁尾 (Footer) ==================== -->
-    <footer id="footer-contact" class="bg-morandi-900 text-morandi-100 pt-14 pb-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-morandi-800">
-                <!-- 學校簡介 -->
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-9 h-9 rounded-xl bg-mint-500 flex items-center justify-center text-white">
-                            <i class="fa-solid fa-sun"></i>
-                        </div>
-                        <span class="text-lg font-bold text-white">新埔國小教學工作坊</span>
-                    </div>
-                    <p class="text-sm text-morandi-300 leading-relaxed">
-                        致力於推動教師專業社群共備與數位教學創新，陪伴每一位老師與孩子在快樂探索中穩健成長。
-                    </p>
-                </div>
-
-                <!-- 快速導覽 -->
-                <div>
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-4">站內快速連結</h3>
-                    <ul class="space-y-2.5 text-sm text-morandi-300">
-                        <li><a href="#curriculum" class="hover:text-mint-300 transition-colors"><i class="fa-solid fa-angle-right mr-2 text-mint-400"></i>各領域素養課程資源</a></li>
-                        <li><a href="#classroom-tools" class="hover:text-mint-300 transition-colors"><i class="fa-solid fa-angle-right mr-2 text-mint-400"></i>課堂隨機抽籤點名器</a></li>
-                        <li><a href="#classroom-tools" class="hover:text-mint-300 transition-colors"><i class="fa-solid fa-angle-right mr-2 text-mint-400"></i>分組討論倒數計時器</a></li>
-                        <li><a href="#announcements" class="hover:text-mint-300 transition-colors"><i class="fa-solid fa-angle-right mr-2 text-mint-400"></i>學期行事曆與教學公告</a></li>
-                    </ul>
-                </div>
-
-                <!-- 親師聯絡資訊 -->
-                <div>
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-4">學校與親師聯絡資訊</h3>
-                    <ul class="space-y-2.5 text-sm text-morandi-300">
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-location-dot mt-1 text-mint-400"></i>
-                            <span>330 桃園市桃園區新埔六街 21 號（新埔國小教務處教學組）</span>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <i class="fa-solid fa-phone text-mint-400"></i>
-                            <span>(03) 316-2972 轉 210～215</span>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <i class="fa-solid fa-envelope text-mint-400"></i>
-                            <span>zhibin-edu@spes.tyc.edu.tw</span>
-                        </li>
-                    </ul>
-                </div>
+    <!-- ==================== 4. 簡潔沉穩頁尾 (Footer) ==================== -->
+    <footer class="bg-navy-800 text-navy-200 border-t border-navy-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
+            <div class="flex items-center gap-2.5 text-white font-semibold">
+                <i class="fa-solid fa-book-bookmark text-tealcalm-400" aria-hidden="true"></i>
+                <span>&copy; 2026 新埔國小教學工作坊 · 智彬數位教學 | 108 課綱數位教學資源庫</span>
             </div>
-
-            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-morandi-400 gap-3">
-                <p>&copy; 2026 新埔國小教學工作坊 | 智彬數位教學 版權所有。</p>
-                <p>專為臺灣國小教育現場設計・支持無障礙與響應式瀏覽</p>
-            </div>
+            <a href="#main-content" class="text-navy-200 hover:text-white transition-colors inline-flex items-center gap-1.5 font-medium">
+                <i class="fa-solid fa-arrow-up text-tealcalm-400" aria-hidden="true"></i>
+                回到頁面頂部
+            </a>
         </div>
     </footer>
 
     <!-- ==================== 教案預覽與下載互動 Modal 視窗 ==================== -->
-    <div id="lesson-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-warmcream-200 animate-[fadeIn_0.2s_ease-out]">
+    <div id="lesson-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-900/65 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-mist-200 overflow-hidden flex flex-col max-h-[90vh]">
             <!-- Modal 頂部標題列 -->
-            <div class="sticky top-0 bg-white/95 backdrop-blur-xs px-6 py-4 border-b border-slate-100 flex items-center justify-between z-10">
-                <div class="flex items-center gap-2.5">
-                    <span id="modal-category-badge" class="px-2.5 py-1 rounded-md text-xs font-bold bg-morandi-100 text-morandi-700">領域標籤</span>
-                    <span id="modal-grade-badge" class="text-xs font-medium text-slate-500">適用年級</span>
+            <div class="px-6 py-4 bg-navy-700 text-white flex items-center justify-between gap-4">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <span id="modal-badge" class="shrink-0 px-2.5 py-0.5 rounded-md text-xs font-bold bg-tealcalm-500 text-white">領域標籤</span>
+                    <h3 id="modal-title" class="text-base sm:text-lg font-bold truncate">教案標題</h3>
                 </div>
-                <button type="button" id="close-modal-btn" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors" aria-label="關閉預覽視窗">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+                <button type="button" id="close-modal-btn" class="shrink-0 w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="關閉教案預覽視窗">
+                    <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
                 </button>
             </div>
 
-            <!-- Modal 內容主體 -->
-            <div class="p-6 sm:p-8 space-y-6">
-                <div>
-                    <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-morandi-900">單元名稱</h3>
-                    <p id="modal-meta" class="text-xs text-slate-500 mt-1.5">設計教師與節數資訊</p>
-                </div>
-
-                <!-- 核心教學目標 -->
-                <div class="bg-warmcream-50 p-4 rounded-2xl border border-warmcream-200">
-                    <h4 class="text-sm font-bold text-morandi-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-bullseye text-mint-500"></i>核心教學目標
-                    </h4>
-                    <ul id="modal-objectives" class="list-disc list-inside text-sm text-slate-700 space-y-1.5">
-                        <!-- 動態填入 -->
-                    </ul>
-                </div>
-
-                <!-- 教學活動流程大綱 -->
-                <div>
-                    <h4 class="text-sm font-bold text-morandi-800 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-list-ol text-morandi-500"></i>教學活動流程大綱（40 分鐘）
-                    </h4>
-                    <div id="modal-steps" class="space-y-2.5 text-sm">
-                        <!-- 動態填入 -->
+            <!-- Modal 內容滾動區 -->
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-5 text-slate-700">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-mist-100 p-4 rounded-xl border border-mist-200 text-sm">
+                    <div>
+                        <span class="text-slate-500 font-medium">適用年段：</span>
+                        <span id="modal-grade" class="font-bold text-slate-800"></span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 font-medium">建議節數：</span>
+                        <span id="modal-duration" class="font-bold text-slate-800"></span>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <span class="text-slate-500 font-medium">核心素養指標：</span>
+                        <span id="modal-competency" class="font-semibold text-navy-700"></span>
                     </div>
                 </div>
 
-                <!-- 學習單預覽區塊 -->
-                <div class="bg-morandi-50/70 p-4 rounded-2xl border border-morandi-100">
-                    <h4 class="text-sm font-bold text-morandi-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-file-lines text-amber-500"></i>隨堂學習單重點預覽
+                <div>
+                    <h4 class="text-sm font-bold text-navy-700 uppercase tracking-wider mb-2.5 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-tealcalm-500" aria-hidden="true"></i>
+                        教學活動流程大綱
                     </h4>
-                    <p id="modal-worksheet" class="text-sm text-slate-700 leading-relaxed bg-white p-3.5 rounded-xl border border-morandi-100">
-                        <!-- 動態填入 -->
-                    </p>
+                    <ul id="modal-steps" class="space-y-2.5 text-sm leading-relaxed text-slate-700 bg-white border border-mist-200 rounded-xl p-4">
+                        <!-- 由 JavaScript 動態填入 -->
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-navy-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check text-tealcalm-500" aria-hidden="true"></i>
+                        學習單與評量重點
+                    </h4>
+                    <p id="modal-assessment" class="text-sm leading-relaxed text-slate-700 bg-tealcalm-50/70 border border-tealcalm-100 rounded-xl p-4"></p>
+                </div>
+
+                <!-- 匯出成功提示訊息 -->
+                <div id="download-feedback" class="hidden p-3.5 rounded-xl bg-tealcalm-50 text-tealcalm-600 text-sm font-semibold border border-tealcalm-200 flex items-center gap-2" role="status" aria-live="polite">
+                    <i class="fa-solid fa-circle-check text-tealcalm-500" aria-hidden="true"></i>
+                    <span>教案大綱純文字檔（UTF-8）已成功匯出至您的下載資料夾！</span>
                 </div>
             </div>
 
             <!-- Modal 底部按鈕列 -->
-            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 rounded-b-3xl">
-                <span id="download-feedback" class="text-xs font-semibold text-mint-600 hidden">
-                    <i class="fa-solid fa-circle-check mr-1"></i>已為您匯出純文字教案大綱檔案！
-                </span>
-                <div class="flex items-center gap-3 w-full sm:w-auto justify-end ml-auto">
-                    <button type="button" id="close-modal-footer-btn" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-sm font-semibold hover:bg-slate-100 transition-colors">
-                        關閉視窗
-                    </button>
-                    <button type="button" id="download-lesson-btn" class="px-5 py-2.5 rounded-xl bg-morandi-600 hover:bg-morandi-700 text-white text-sm font-semibold shadow-sm transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-download"></i>
-                        下載教案與學習單大綱
-                    </button>
-                </div>
+            <div class="px-6 py-4 bg-mist-50 border-t border-mist-200 flex flex-col sm:flex-row justify-end gap-3">
+                <button type="button" id="close-modal-footer-btn" class="px-5 py-2.5 rounded-xl border border-mist-300 bg-white hover:bg-mist-100 text-slate-700 font-semibold text-sm transition-colors">
+                    關閉視窗
+                </button>
+                <button type="button" id="download-lesson-btn" class="px-5 py-2.5 rounded-xl bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm shadow-xs transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+                    下載教案大綱 (.txt)
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- ==================== 原生 JavaScript 互動邏輯 ==================== -->
+    <!-- ==================== 原生 JavaScript 互動控制中心 ==================== -->
     <script>
-        /**
-         * 1. 行動版導覽列開關控制
-         */
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        (function () {
+            'use strict';
 
-        mobileMenuBtn.addEventListener('click', () => {
-            const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-            mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
-            mobileMenu.classList.toggle('hidden');
-            mobileMenuIcon.classList.toggle('fa-bars');
-            mobileMenuIcon.classList.toggle('fa-xmark');
-        });
+            /* ----------------------------------------------------------------
+               1. 手機版漢堡選單切換邏輯
+            ---------------------------------------------------------------- */
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-        // 點擊手機版導覽連結後自動收合選單
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-                mobileMenuIcon.classList.add('fa-bars');
-                mobileMenuIcon.classList.remove('fa-xmark');
-            });
-        });
+            function toggleMobileMenu() {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', String(isHidden));
+                mobileMenuIcon.classList.toggle('fa-bars', !isHidden);
+                mobileMenuIcon.classList.toggle('fa-xmark', isHidden);
+            }
 
-        /**
-         * 2. 課程資源區：領域篩選與教案 Modal 預覽
-         */
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const curriculumCards = document.querySelectorAll('.curriculum-card');
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // 更新按鈕樣式
-                filterBtns.forEach(b => {
-                    b.classList.remove('bg-morandi-600', 'text-white', 'shadow-sm');
-                    b.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
-                });
-                btn.classList.add('bg-morandi-600', 'text-white', 'shadow-sm');
-                btn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
-
-                const selectedCategory = btn.getAttribute('data-filter');
-                curriculumCards.forEach(card => {
-                    if (selectedCategory === 'all' || card.getAttribute('data-category') === selectedCategory) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
+            mobileNavLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    mobileMenuIcon.classList.remove('fa-xmark');
+                    mobileMenuIcon.classList.add('fa-bars');
                 });
             });
-        });
 
-        // 教案資料庫
-        const lessonData = {
-            'chinese-1': {
-                category: '國語文領域',
-                grade: '中年級（三、四年級）',
-                title: '繪本裡的秘密花園：故事結構與情感表達',
-                meta: '設計者：林雅婷老師 ｜ 建議節數：2 節課（共 80 分鐘） ｜ 對應領綱：2-II-2、5-II-4',
-                objectives: [
-                    '能透過心智圖找出故事中的主角、背景、問題與解決方法。',
-                    '能運用視覺與聽覺感官摹寫，將平淡的句子改寫得更生動。',
-                    '能與同儕分享閱讀後的感受，並尊重不同的觀點。'
-                ],
-                steps: [
-                    { phase: '引起動機 (8 分鐘)', desc: '播放森林清晨音效，請學生閉眼想像並分享腦海中的畫面。' },
-                    { phase: '發展活動 (22 分鐘)', desc: '共讀精選繪本，小組合作完成「故事山脈結構圖」海報。' },
-                    { phase: '綜合活動 (10 分鐘)', desc: '進行「句子變變變」挑戰，練習加入形容詞與感官細節。' }
-                ],
-                worksheet: '【學習單任務】請畫出故事中讓你印象最深刻的一幕，並在下方用「我彷彿看見……、我似乎聽見……」的句型寫下三句話。'
-            },
-            'math-1': {
-                category: '數學領域',
-                grade: '四年級上學期',
-                title: '分數派對大作戰：等值分數與生活應用',
-                meta: '設計者：陳建宏老師 ｜ 建議節數：1 節課（40 分鐘） ｜ 對應領綱：N-4-6',
-                objectives: [
-                    '透過具體操作圓形分數板，理解 1/2、2/4、4/8 代表相同的量。',
-                    '能分辨生活中的等值分數情境，並說明判斷理由。',
-                    '培養小組分工合作與數學語言表達能力。'
-                ],
-                steps: [
-                    { phase: '情境佈題 (7 分鐘)', desc: '情境任務：「小美吃了 1/2 個披薩，阿明吃了 2/4 個一樣大的披薩，誰吃得多？」' },
-                    { phase: '動手操作 (23 分鐘)', desc: '發下色紙與分數圓餅教具，讓學生實際疊合比較並記錄發現。' },
-                    { phase: '歸納總結 (10 分鐘)', desc: '全班發表發現，歸納「分子與分母同乘以一個整數」的等值規律。' }
-                ],
-                worksheet: '【學習單任務】請幫派對主人設計兩份一樣多的巧克力分配法，並用塗色方式在長條圖上證明它們是等值分數。'
-            }
-        };
+            /* ----------------------------------------------------------------
+               2. 領域課程資源庫篩選功能
+            ---------------------------------------------------------------- */
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const curriculumCards = document.querySelectorAll('.curriculum-card');
 
-        const lessonModal = document.getElementById('lesson-modal');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const closeModalFooterBtn = document.getElementById('close-modal-footer-btn');
-        const downloadLessonBtn = document.getElementById('download-lesson-btn');
-        const downloadFeedback = document.getElementById('download-feedback');
-        let currentLessonKey = null;
+            filterBtns.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const selectedFilter = btn.dataset.filter;
 
-        function openLessonModal(key) {
-            const data = lessonData[key];
-            if (!data) return;
-            currentLessonKey = key;
+                    // 更新按鈕視覺與 ARIA 狀態
+                    filterBtns.forEach((b) => {
+                        const isSelected = b === btn;
+                        b.setAttribute('aria-pressed', String(isSelected));
+                        b.classList.toggle('active', isSelected);
+                        b.classList.toggle('bg-navy-600', isSelected);
+                        b.classList.toggle('text-white', isSelected);
+                        b.classList.toggle('shadow-xs', isSelected);
 
-            document.getElementById('modal-category-badge').textContent = data.category;
-            document.getElementById('modal-grade-badge').textContent = data.grade;
-            document.getElementById('modal-title').textContent = data.title;
-            document.getElementById('modal-meta').textContent = data.meta;
+                        b.classList.toggle('bg-white', !isSelected);
+                        b.classList.toggle('text-slate-700', !isSelected);
+                        b.classList.toggle('border', !isSelected);
+                        b.classList.toggle('border-mist-200', !isSelected);
+                    });
 
-            const objList = document.getElementById('modal-objectives');
-            objList.innerHTML = data.objectives.map(item => `<li>${item}</li>`).join('');
+                    // 過濾課程卡片
+                    curriculumCards.forEach((card) => {
+                        const category = card.dataset.category;
+                        if (selectedFilter === 'all' || category === selectedFilter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
 
-            const stepsDiv = document.getElementById('modal-steps');
-            stepsDiv.innerHTML = data.steps.map(step => `
-                <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                    <span class="font-bold text-morandi-700 shrink-0 text-xs sm:text-sm bg-white px-2.5 py-1 rounded-lg border border-morandi-100">${step.phase}</span>
-                    <span class="text-slate-600">${step.desc}</span>
-                </div>
-            `).join('');
-
-            document.getElementById('modal-worksheet').textContent = data.worksheet;
-            downloadFeedback.classList.add('hidden');
-
-            lessonModal.classList.remove('hidden');
-            lessonModal.classList.add('flex');
-            closeModalBtn.focus();
-        }
-
-        function closeLessonModal() {
-            lessonModal.classList.add('hidden');
-            lessonModal.classList.remove('flex');
-        }
-
-        closeModalBtn.addEventListener('click', closeLessonModal);
-        closeModalFooterBtn.addEventListener('click', closeLessonModal);
-        lessonModal.addEventListener('click', (e) => {
-            if (e.target === lessonModal) closeLessonModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !lessonModal.classList.contains('hidden')) {
-                closeLessonModal();
-            }
-        });
-
-        // 下載教案大綱文字檔功能
-        downloadLessonBtn.addEventListener('click', () => {
-            if (!currentLessonKey) return;
-            const data = lessonData[currentLessonKey];
-            const content = [
-                `【新埔國小教學工作坊 - 智彬數位教學教案大綱】`,
-                `領域：${data.category}`,
-                `年級：${data.grade}`,
-                `單元主題：${data.title}`,
-                `${data.meta}`,
-                `\n--- 核心教學目標 ---`,
-                ...data.objectives.map((o, i) => `${i + 1}. ${o}`),
-                `\n--- 教學活動流程大綱 ---`,
-                ...data.steps.map(s => `• ${s.phase}：${s.desc}`),
-                `\n--- 隨堂學習單預覽 ---`,
-                data.worksheet
-            ].join('\n');
-
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${data.title}_教案大綱.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            downloadFeedback.classList.remove('hidden');
-        });
-
-        /**
-         * 3. 課堂互動工具一：隨機抽籤點名器（六年級導師班 24 人預設名單）
-         */
-        const defaultStudents = [
-            '01 陳宇軒', '02 林品妍', '03 黃子豪', '04 張語彤',
-            '05 李承恩', '06 王宥希', '07 吳柏睿', '08 劉芷晴',
-            '09 蔡秉翰', '10 楊欣妤', '11 許博宇', '12 鄭羽涵',
-            '13 謝睿哲', '14 郭子瑜', '15 洪宇翔', '16 邱品臻',
-            '17 曾柏翰', '18 廖宥晴', '19 賴冠宇', '20 徐芷妍',
-            '21 周楷倫', '22 葉芯瑜', '23 莊博鈞', '24 蘇詠晴'
-        ];
-
-        let allStudents = [...defaultStudents];
-        let availableStudents = [...defaultStudents];
-        let isDrawing = false;
-
-        const pickerDisplay = document.getElementById('picker-display');
-        const remainingBadge = document.getElementById('remaining-badge');
-        const drawBtn = document.getElementById('draw-btn');
-        const drawBtnText = document.getElementById('draw-btn-text');
-        const noRepeatToggle = document.getElementById('no-repeat-toggle');
-        const resetPoolBtn = document.getElementById('reset-pool-btn');
-        const toggleRosterBtn = document.getElementById('toggle-roster-btn');
-        const rosterEditor = document.getElementById('roster-editor');
-        const studentListInput = document.getElementById('student-list-input');
-        const saveRosterBtn = document.getElementById('save-roster-btn');
-        const loadSampleBtn = document.getElementById('load-sample-btn');
-
-        // 初始化編輯器文字
-        studentListInput.value = defaultStudents.join('\n');
-
-        function updateRemainingBadge() {
-            const count = noRepeatToggle.checked ? availableStudents.length : allStudents.length;
-            remainingBadge.textContent = `待抽人數：${count} 人`;
-        }
-
-        // 切換名單編輯區顯示
-        toggleRosterBtn.addEventListener('click', () => {
-            rosterEditor.classList.toggle('hidden');
-        });
-
-        // 載入預設範例名單
-        loadSampleBtn.addEventListener('click', () => {
-            studentListInput.value = defaultStudents.join('\n');
-        });
-
-        // 套用自訂名單
-        saveRosterBtn.addEventListener('click', () => {
-            const lines = studentListInput.value
-                .split('\n')
-                .map(line => line.trim())
-                .filter(line => line.length > 0);
-
-            if (lines.length === 0) {
-                pickerDisplay.innerHTML = `<span class="text-lg font-bold text-rose-600">名單不可為空，請至少輸入一位學生！</span>`;
-                return;
-            }
-
-            allStudents = [...lines];
-            availableStudents = [...lines];
-            updateRemainingBadge();
-            rosterEditor.classList.add('hidden');
-            pickerDisplay.innerHTML = `
-                <span class="text-2xl font-bold text-morandi-800">名單已更新（共 ${allStudents.length} 位）</span>
-                <span class="text-xs text-slate-500 mt-1">點擊下方按鈕開始抽籤</span>
-            `;
-        });
-
-        // 重置已抽名單
-        resetPoolBtn.addEventListener('click', () => {
-            availableStudents = [...allStudents];
-            updateRemainingBadge();
-            pickerDisplay.innerHTML = `
-                <span class="text-2xl font-bold text-morandi-800">已重置抽籤名單</span>
-                <span class="text-xs text-slate-500 mt-1">全員皆已回到待抽池中</span>
-            `;
-        });
-
-        noRepeatToggle.addEventListener('change', updateRemainingBadge);
-
-        // 執行隨機抽籤動畫與結果顯示
-        drawBtn.addEventListener('click', () => {
-            if (isDrawing) return;
-
-            const pool = noRepeatToggle.checked ? availableStudents : allStudents;
-            if (pool.length === 0) {
-                pickerDisplay.innerHTML = `
-                    <span class="text-xl font-bold text-amber-600">所有學生皆已抽過一輪囉！</span>
-                    <span class="text-xs text-slate-500 mt-1">請點擊上方「重置已抽名單」重新開始</span>
-                `;
-                return;
-            }
-
-            isDrawing = true;
-            drawBtn.disabled = true;
-            drawBtnText.textContent = '抽籤選號中...';
-
-            let ticks = 0;
-            const maxTicks = 18;
-            const interval = setInterval(() => {
-                const tempIndex = Math.floor(Math.random() * allStudents.length);
-                pickerDisplay.innerHTML = `
-                    <span class="text-3xl sm:text-4xl font-bold text-morandi-500">${allStudents[tempIndex]}</span>
-                `;
-                ticks++;
-
-                if (ticks >= maxTicks) {
-                    clearInterval(interval);
-                    const finalIndex = Math.floor(Math.random() * pool.length);
-                    const winner = pool[finalIndex];
-
-                    // 若開啟不重複模式，從待抽池移除
-                    if (noRepeatToggle.checked) {
-                        availableStudents.splice(finalIndex, 1);
-                    }
-                    updateRemainingBadge();
-
-                    // 拆解座號與姓名以呈現層次感
-                    const parts = winner.split(/\s+/);
-                    if (parts.length >= 2) {
-                        pickerDisplay.innerHTML = `
-                            <span class="px-3 py-0.5 rounded-full bg-mint-500 text-white text-xs font-bold mb-1">座號 ${parts[0]}</span>
-                            <span class="text-3xl sm:text-4xl font-bold text-morandi-900 tracking-wide">${parts.slice(1).join(' ')}</span>
-                        `;
-                    } else {
-                        pickerDisplay.innerHTML = `
-                            <span class="text-3xl sm:text-4xl font-bold text-morandi-900 tracking-wide">${winner}</span>
-                        `;
-                    }
-
-                    isDrawing = false;
-                    drawBtn.disabled = false;
-                    drawBtnText.textContent = '再抽下一位';
+            /* ----------------------------------------------------------------
+               3. 教案預覽與下載 Modal 互動系統（含焦點管理與 UTF-8 BOM 下載）
+            ---------------------------------------------------------------- */
+            const lessonDatabase = {
+                'chinese-1': {
+                    category: '國語文領域',
+                    title: '閱讀理解策略：心智圖與關鍵句萃取',
+                    grade: '五年級上學期',
+                    duration: '4 節課（共 160 分鐘）',
+                    competency: '國-E-B1 理解與運用國語文在日常生活中學習體察他人的感受，並給予適當的回應。',
+                    steps: [
+                        '【第一節・引起動機】透過短篇生活故事提問，引導學生察覺「抓重點」與「逐字背誦」的閱讀效率差異。',
+                        '【第二節・策略示範】教師示範尋找自然段「中心句」的三個線索（首句、尾句、轉折詞後方）。',
+                        '【第三節・分組共作】四人一組運用心智圖工作紙，將課文拆解為「起因、經過、結果」三大分支節點。',
+                        '【第四節・發表與統整】各組上台進行 2 分鐘口頭摘要報告，並完成個人閱讀理解檢核單。'
+                    ],
+                    assessment: '能正確標示課文各段關鍵詞彙（佔 40%）、小組心智圖結構完整且邏輯清晰（佔 40%）、口頭摘要表達流暢（佔 20%）。'
+                },
+                'math-1': {
+                    category: '數學領域',
+                    title: '分數派對大作戰：等值分數與生活應用',
+                    grade: '四年級上學期',
+                    duration: '4 節課（共 160 分鐘）',
+                    competency: '數-E-A2 具備基本的算術操作能力、並能指認基本的形體與相對關係，在日常生活情境中，用數學表述與解決問題。',
+                    steps: [
+                        '【第一節・情境導入】設定「班級同樂會分披薩」任務，比較 1/2 張與 2/4 張披薩的大小關係。',
+                        '【第二節・具體操作】每位學生使用色紙進行對摺實驗，記錄並塗色找出與 1/3 相等的多組分數。',
+                        '【第三節・規律歸納】觀察分子與分母的倍數變化，歸納出擴分與約分的初步視覺概念。',
+                        '【第四節・任務闖關】完成「分數超市採購單」情境題，解決生活中不同單位分割的比較問題。'
+                    ],
+                    assessment: '能透過摺紙與畫圖正確表徵等值分數（佔 50%）、能獨立解決生活情境應用題並寫出合理算式（佔 50%）。'
+                },
+                'chinese-2': {
+                    category: '國語文領域',
+                    title: '思辨寫作工坊：議論文立場與論據建構',
+                    grade: '六年級上學期',
+                    duration: '5 節課（共 200 分鐘）',
+                    competency: '國-E-C2 與他人互動時，能適切運用語文能力表達個人想法，理解與包容不同意見。',
+                    steps: [
+                        '【第一節・議題探索】以「國小校園是否應開放午休自主閱讀」為題，練習區分客觀事實與個人觀點。',
+                        '【第二節・結構拆解】分析範文中的「論點（主張）—論據（理由與實例）—結論（呼籲）」三段式架構。',
+                        '【第三節・小組辯論】正反雙方運用論點卡片進行立場攻防，練習使用「雖然……但是……」、「由此可見」等關聯詞。',
+                        '【第四節・起草撰寫】學生選定立場並運用寫作鷹架單，完成約 350 字之結構化短文。',
+                        '【第五節・同儕互評】依據檢核規準進行同儕回饋與文字潤飾。'
+                    ],
+                    assessment: '立場鮮明且前後一致（佔 30%）、論據具備生活實例或數據支持（佔 40%）、句型與轉折詞運用適切（佔 30%）。'
+                },
+                'math-2': {
+                    category: '數學領域',
+                    title: '圓周率與圓面積探索：幾何切割與推導',
+                    grade: '六年級上學期',
+                    duration: '4 節課（共 160 分鐘）',
+                    competency: '數-E-B1 具備日常語言與數字及算術符號之間的轉換能力，並能熟練操作日常使用之度量衡及時間。',
+                    steps: [
+                        '【第一節・實測發現】分組測量不同直徑的圓形物品（紙杯、餐盤、飛盤）之圓周長，計算比值發現約為 3.14。',
+                        '【第二節・圓周公式】建立「圓周長 = 直徑 × 圓周率」概念，並練習已知圓周長反推直徑與半徑。',
+                        '【第三節・面積切割】將圓形教具等分為 8 份、16 份扇形，交叉拼接成近似長方形，推導「半徑 × 半徑 × 圓周率」。',
+                        '【第四節・複合圖形】解決操場跑道與扇形花圃等生活複合圖形面積計算問題。'
+                    ],
+                    assessment: '能正確操作測量並說明圓周率意義（佔 30%）、能理解並口述圓面積公式推導過程（佔 30%）、能正確計算複合圓形面積（佔 40%）。'
                 }
-            }, 65);
-        });
+            };
 
-        /**
-         * 4. 課堂互動工具二：課堂倒數計時器
-         */
-        let totalSeconds = 300; // 預設 5 分鐘
-        let remainingSeconds = 300;
-        let timerInterval = null;
-        let isRunning = false;
+            const lessonModal = document.getElementById('lesson-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const closeModalFooterBtn = document.getElementById('close-modal-footer-btn');
+            const downloadLessonBtn = document.getElementById('download-lesson-btn');
+            const downloadFeedback = document.getElementById('download-feedback');
+            const openLessonBtns = document.querySelectorAll('.open-lesson-btn');
 
-        const timerDisplay = document.getElementById('timer-display');
-        const timerProgressBar = document.getElementById('timer-progress-bar');
-        const timerMessage = document.getElementById('timer-message');
-        const timerStatusBadge = document.getElementById('timer-status-badge');
-        const timerDisplayBox = document.getElementById('timer-display-box');
-        const timerCard = document.getElementById('timer-card');
-        const timerStartBtn = document.getElementById('timer-start-btn');
-        const timerPauseBtn = document.getElementById('timer-pause-btn');
-        const timerResetBtn = document.getElementById('timer-reset-btn');
+            let currentLessonKey = null;
+            let lastFocusedTrigger = null;
 
-        function formatTime(secs) {
-            const mins = Math.floor(secs / 60);
-            const remSecs = secs % 60;
-            return `${String(mins).padStart(2, '0')}:${String(remSecs).padStart(2, '0')}`;
-        }
+            function openLessonModal(lessonKey, triggerEl) {
+                const data = lessonDatabase[lessonKey];
+                if (!data) return;
 
-        function updateTimerUI() {
-            timerDisplay.textContent = formatTime(remainingSeconds);
-            const percentage = totalSeconds > 0 ? (remainingSeconds / totalSeconds) * 100 : 0;
-            timerProgressBar.style.width = `${percentage}%`;
+                currentLessonKey = lessonKey;
+                lastFocusedTrigger = triggerEl || document.activeElement;
 
-            // 最後 30 秒進入黃色警示
-            if (remainingSeconds > 0 && remainingSeconds <= 30) {
-                timerProgressBar.classList.remove('bg-mint-500', 'bg-rose-500');
-                timerProgressBar.classList.add('bg-amber-500');
-            } else if (remainingSeconds === 0) {
-                timerProgressBar.classList.remove('bg-mint-500', 'bg-amber-500');
-                timerProgressBar.classList.add('bg-rose-500');
-            } else {
-                timerProgressBar.classList.remove('bg-amber-500', 'bg-rose-500');
-                timerProgressBar.classList.add('bg-mint-500');
+                document.getElementById('modal-badge').textContent = data.category;
+                document.getElementById('modal-title').textContent = data.title;
+                document.getElementById('modal-grade').textContent = data.grade;
+                document.getElementById('modal-duration').textContent = data.duration;
+                document.getElementById('modal-competency').textContent = data.competency;
+                document.getElementById('modal-assessment').textContent = data.assessment;
+
+                const stepsList = document.getElementById('modal-steps');
+                stepsList.innerHTML = '';
+                data.steps.forEach((step) => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-start gap-2.5';
+                    li.innerHTML = `<i class="fa-solid fa-caret-right text-tealcalm-500 mt-1 shrink-0" aria-hidden="true"></i><span>${step}</span>`;
+                    stepsList.appendChild(li);
+                });
+
+                downloadFeedback.classList.add('hidden');
+                lessonModal.classList.remove('hidden');
+                lessonModal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+
+                // 開啟時將焦點移至關閉按鈕，符合無障礙規範
+                closeModalBtn.focus();
             }
-        }
 
-        function clearTimeUpAlert() {
-            timerDisplayBox.classList.remove('bg-rose-100', 'border-rose-400', 'animate-pulse');
-            timerDisplayBox.classList.add('bg-warmcream-100', 'border-warmcream-300');
-            timerDisplay.classList.remove('text-rose-700');
-            timerDisplay.classList.add('text-morandi-900');
-        }
+            function closeLessonModal() {
+                if (lessonModal.classList.contains('hidden')) return;
+                lessonModal.classList.add('hidden');
+                lessonModal.classList.remove('flex');
+                document.body.style.overflow = '';
 
-        function setTimerMinutes(minutes) {
-            pauseTimer();
-            clearTimeUpAlert();
-            totalSeconds = minutes * 60;
-            remainingSeconds = totalSeconds;
-            updateTimerUI();
-            timerStatusBadge.textContent = '已設定';
-            timerStatusBadge.className = 'px-3 py-1 rounded-full bg-morandi-100 text-morandi-700 text-xs font-semibold';
-            timerMessage.textContent = `已設定為 ${minutes} 分鐘，點擊「開始」啟動倒數`;
-        }
-
-        function startTimer() {
-            if (isRunning || remainingSeconds <= 0) return;
-            clearTimeUpAlert();
-            isRunning = true;
-
-            timerStartBtn.disabled = true;
-            timerStartBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            timerPauseBtn.disabled = false;
-
-            timerStatusBadge.textContent = '計時進行中';
-            timerStatusBadge.className = 'px-3 py-1 rounded-full bg-mint-100 text-mint-700 text-xs font-semibold';
-            timerMessage.textContent = '討論進行中，請留意時間分配...';
-
-            timerInterval = setInterval(() => {
-                if (remainingSeconds > 0) {
-                    remainingSeconds--;
-                    updateTimerUI();
+                // 關閉時將焦點還原至原觸發按鈕
+                if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === 'function') {
+                    lastFocusedTrigger.focus();
                 }
-
-                if (remainingSeconds === 0) {
-                    pauseTimer();
-                    // 視覺提醒效果
-                    timerDisplayBox.classList.remove('bg-warmcream-100', 'border-warmcream-300');
-                    timerDisplayBox.classList.add('bg-rose-100', 'border-rose-400', 'animate-pulse');
-                    timerDisplay.classList.remove('text-morandi-900');
-                    timerDisplay.classList.add('text-rose-700');
-
-                    timerStatusBadge.textContent = '時間到！';
-                    timerStatusBadge.className = 'px-3 py-1 rounded-full bg-rose-500 text-white text-xs font-bold';
-                    timerMessage.textContent = '⏰ 時間到囉！請各組停止討論，準備分享成果！';
-                }
-            }, 1000);
-        }
-
-        function pauseTimer() {
-            isRunning = false;
-            clearInterval(timerInterval);
-            timerStartBtn.disabled = false;
-            timerStartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            timerPauseBtn.disabled = true;
-
-            if (remainingSeconds > 0) {
-                timerStatusBadge.textContent = '已暫停';
-                timerStatusBadge.className = 'px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold';
-                timerMessage.textContent = '計時已暫停，可隨時點擊開始繼續';
             }
-        }
 
-        function resetTimer() {
-            pauseTimer();
-            clearTimeUpAlert();
-            remainingSeconds = totalSeconds;
-            updateTimerUI();
-            timerStatusBadge.textContent = '待機中';
-            timerStatusBadge.className = 'px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold';
-            timerMessage.textContent = '已重設時間，點擊「開始」啟動倒數';
-        }
+            openLessonBtns.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    openLessonModal(btn.dataset.lessonId, btn);
+                });
+            });
 
-        timerStartBtn.addEventListener('click', startTimer);
-        timerPauseBtn.addEventListener('click', pauseTimer);
-        timerResetBtn.addEventListener('click', resetTimer);
+            closeModalBtn.addEventListener('click', closeLessonModal);
+            closeModalFooterBtn.addEventListener('click', closeLessonModal);
 
-        // 初始化計時器顯示
-        updateTimerUI();
+            // 點擊 Modal 外部遮罩關閉
+            lessonModal.addEventListener('click', (e) => {
+                if (e.target === lessonModal) {
+                    closeLessonModal();
+                }
+            });
+
+            // 按下 ESC 鍵關閉 Modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !lessonModal.classList.contains('hidden')) {
+                    closeLessonModal();
+                }
+            });
+
+            // 下載 UTF-8 BOM 編碼之 .txt 教案大綱檔案（防止 Windows 記事本亂碼）
+            downloadLessonBtn.addEventListener('click', () => {
+                if (!currentLessonKey || !lessonDatabase[currentLessonKey]) return;
+                const data = lessonDatabase[currentLessonKey];
+
+                const lines = [
+                    '============================================================',
+                    '新埔國小教學工作坊 | 智彬數位教學 — 教案大綱檔案',
+                    '============================================================',
+                    `【領域類別】${data.category}`,
+                    `【單元名稱】${data.title}`,
+                    `【適用年段】${data.grade}`,
+                    `【建議節數】${data.duration}`,
+                    `【核心素養】${data.competency}`,
+                    '',
+                    '------------------------------------------------------------',
+                    '一、教學活動流程大綱',
+                    '------------------------------------------------------------',
+                    ...data.steps.map((s) => `• ${s}`),
+                    '',
+                    '------------------------------------------------------------',
+                    '二、學習單與評量重點',
+                    '------------------------------------------------------------',
+                    data.assessment,
+                    '',
+                    '============================================================',
+                    '匯出時間：' + new Date().toLocaleString('zh-TW')
+                ];
+
+                // 加入 \uFEFF UTF-8 BOM 標記
+                const content = '\uFEFF' + lines.join('\r\n');
+                const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${data.title}_教案大綱.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                downloadFeedback.classList.remove('hidden');
+            });
+        })();
     </script>
 </body>
 </html>
