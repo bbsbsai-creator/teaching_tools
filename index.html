@@ -17,7 +17,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind 自訂專業沉穩教育色系設定 -->
+    <!-- Tailwind 自訂柔和亮麗親和教育色系設定 -->
     <script>
         tailwind.config = {
             theme: {
@@ -26,32 +26,40 @@
                         sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
                     },
                     colors: {
-                        navy: {
-                            50: '#F1F5F9',
-                            100: '#E2E8F0',
-                            200: '#CBD5E1',
-                            300: '#94A3B8',
-                            400: '#47698F',
-                            500: '#2B4C73',
-                            600: '#1E3A5F',
-                            700: '#152944',
-                            800: '#0F1E33',
-                            900: '#091322',
+                        ivory: {
+                            50: '#FFFDF9',
+                            100: '#FAF7F2',
+                            200: '#EAE4D7',
+                            300: '#DCD3C1',
                         },
-                        tealcalm: {
-                            50: '#F0F6F7',
-                            100: '#DCE9EB',
-                            200: '#B8D3D7',
-                            400: '#4A8C91',
-                            500: '#2E6F73',
-                            600: '#23565A',
+                        skybrand: {
+                            50: '#F0F9FF',
+                            100: '#E0F2FE',
+                            200: '#BAE6FD',
+                            400: '#38BDF8',
+                            500: '#0EA5E9',
+                            600: '#0284C7',
+                            700: '#0369A1',
                         },
-                        mist: {
-                            50: '#F8FAFC',
-                            100: '#F4F6F9',
-                            200: '#DCE2EA',
-                            300: '#CBD3DF',
+                        peach: {
+                            50: '#FFF7ED',
+                            100: '#FFEDD5',
+                            200: '#FED7AA',
+                            500: '#F97316',
+                            600: '#EA580C',
+                            700: '#C2410C',
+                        },
+                        mint: {
+                            50: '#ECFDF5',
+                            100: '#D1FAE5',
+                            500: '#10B981',
+                            600: '#059669',
+                            700: '#047857',
                         }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(71, 85, 105, 0.08)',
+                        'soft-hover': '0 10px 25px -4px rgba(2, 132, 199, 0.14)',
                     }
                 }
             }
@@ -60,33 +68,37 @@
 
     <style>
         :root {
-            --color-navy-primary: #1E3A5F;
-            --color-navy-hover: #152944;
-            --color-teal-accent: #2E6F73;
-            --color-bg-mist: #F4F6F9;
-            --color-border-mist: #DCE2EA;
+            --bg-page: #FFFDF9;
+            --bg-surface: #FFFFFF;
+            --border-warm: #EAE4D7;
+            --color-primary: #0284C7;
+            --color-primary-hover: #0369A1;
+            --color-accent-peach: #C2410C;
+            --color-accent-mint: #059669;
             --color-text-primary: #1E293B;
             --color-text-secondary: #475569;
         }
 
         body {
-            background-color: var(--color-bg-mist);
+            background-color: var(--bg-page);
             color: var(--color-text-primary);
             font-feature-settings: "palt";
         }
 
         /* 無障礙鍵盤焦點指示器 (WCAG 2.1 AA) */
         *:focus-visible {
-            outline: 3px solid var(--color-teal-accent);
+            outline: 3px solid var(--color-primary);
             outline-offset: 2px;
         }
 
         /* 卡片平滑進場微動畫 */
         .curriculum-card {
+            box-shadow: 0 4px 20px -2px rgba(71, 85, 105, 0.08);
             transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
         .curriculum-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -4px rgba(2, 132, 199, 0.14);
         }
 
         /* 自訂細緻捲軸（適用於教案預覽視窗） */
@@ -94,39 +106,39 @@
             width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #F4F6F9;
+            background: #FAF7F2;
             border-radius: 9999px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
+            background: #DCD3C1;
             border-radius: 9999px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94A3B8;
+            background: #BAE6FD;
         }
     </style>
 </head>
-<body class="antialiased selection:bg-tealcalm-100 selection:text-navy-800 flex flex-col min-h-screen">
+<body class="antialiased selection:bg-skybrand-100 selection:text-skybrand-700 flex flex-col min-h-screen">
 
     <!-- 無障礙跳至主內容捷徑 -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-navy-600 focus:text-white focus:rounded-lg focus:shadow-lg">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-skybrand-600 focus:text-white focus:rounded-lg focus:shadow-lg">
         跳至主要內容區
     </a>
 
     <!-- ==================== 1. 頂部導覽列 (Sticky Header) ==================== -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-mist-200 shadow-xs">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-ivory-200 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20">
                 <!-- 品牌識別區 -->
                 <a href="#main-content" class="flex items-center gap-3 group rounded-xl p-1">
-                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-navy-600 flex items-center justify-center text-white shadow-sm group-hover:bg-navy-700 transition-colors">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-skybrand-500 to-skybrand-600 flex items-center justify-center text-white shadow-sm group-hover:from-skybrand-600 group-hover:to-skybrand-700 transition-all">
                         <i class="fa-solid fa-book-bookmark text-lg sm:text-xl" aria-hidden="true"></i>
                     </div>
                     <div>
-                        <span class="block text-base sm:text-lg font-bold tracking-tight text-navy-800 leading-tight">
+                        <span class="block text-base sm:text-lg font-bold tracking-tight text-slate-800 leading-tight">
                             新埔國小教學工作坊
                         </span>
-                        <span class="block text-xs font-medium text-tealcalm-500 tracking-wide">
+                        <span class="block text-xs font-semibold text-skybrand-700 tracking-wide">
                             智彬數位教學・國小數位教學平台
                         </span>
                     </div>
@@ -134,23 +146,23 @@
 
                 <!-- 桌面版導覽連結 -->
                 <nav class="hidden md:flex items-center gap-3" aria-label="主導覽列">
-                    <a href="#curriculum" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-navy-700 hover:bg-navy-50 transition-colors inline-flex items-center gap-2">
-                        <i class="fa-solid fa-layer-group text-tealcalm-500" aria-hidden="true"></i>
+                    <a href="#curriculum" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-skybrand-700 hover:bg-skybrand-50 transition-colors inline-flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-skybrand-600" aria-hidden="true"></i>
                         領域課程資源庫
                     </a>
                 </nav>
 
                 <!-- 手機版漢堡選單按鈕 -->
-                <button id="mobile-menu-btn" type="button" class="md:hidden p-2.5 rounded-xl text-navy-700 hover:bg-navy-50 transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="開啟主選單">
+                <button id="mobile-menu-btn" type="button" class="md:hidden p-2.5 rounded-xl text-slate-700 hover:bg-skybrand-50 hover:text-skybrand-700 transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="開啟主選單">
                     <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
 
         <!-- 手機版展開選單 -->
-        <nav id="mobile-menu" class="hidden md:hidden bg-white border-t border-mist-200 px-4 py-3 shadow-lg" aria-label="行動版導覽列">
-            <a href="#curriculum" class="mobile-nav-link flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-navy-50 hover:text-navy-700 transition-colors">
-                <i class="fa-solid fa-layer-group text-tealcalm-500" aria-hidden="true"></i>
+        <nav id="mobile-menu" class="hidden md:hidden bg-white border-t border-ivory-200 px-4 py-3 shadow-lg" aria-label="行動版導覽列">
+            <a href="#curriculum" class="mobile-nav-link flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-skybrand-50 hover:text-skybrand-700 transition-colors">
+                <i class="fa-solid fa-layer-group text-skybrand-600" aria-hidden="true"></i>
                 領域課程資源庫
             </a>
         </nav>
@@ -159,26 +171,26 @@
     <!-- ==================== 主要內容區 ==================== -->
     <main id="main-content" class="flex-grow">
 
-        <!-- ==================== 2. 簡潔主視覺標題區塊 (Hero Section) ==================== -->
-        <section class="relative overflow-hidden bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 py-14 sm:py-20 border-b border-navy-800 text-white">
-            <!-- 低調沉穩的幾何光暈裝飾 -->
-            <div class="absolute -top-28 -right-28 w-96 h-96 rounded-full bg-tealcalm-500/15 blur-3xl pointer-events-none" aria-hidden="true"></div>
-            <div class="absolute -bottom-28 -left-28 w-96 h-96 rounded-full bg-navy-400/20 blur-3xl pointer-events-none" aria-hidden="true"></div>
+        <!-- ==================== 2. 柔和亮麗主視覺標題區塊 (Hero Section) ==================== -->
+        <section class="relative overflow-hidden bg-gradient-to-br from-sky-100 via-amber-50 to-emerald-50 py-14 sm:py-20 border-b border-ivory-200">
+            <!-- 柔和粉彩光暈裝飾 -->
+            <div class="absolute -top-28 -right-28 w-96 h-96 rounded-full bg-amber-200/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute -bottom-28 -left-28 w-96 h-96 rounded-full bg-sky-200/45 blur-3xl pointer-events-none" aria-hidden="true"></div>
 
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-tealcalm-100 text-xs sm:text-sm font-medium mb-6 border border-white/15 backdrop-blur-xs">
-                    <span class="w-2 h-2 rounded-full bg-tealcalm-400" aria-hidden="true"></span>
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 text-skybrand-700 text-xs sm:text-sm font-semibold mb-6 border border-skybrand-200 shadow-xs backdrop-blur-xs">
+                    <span class="w-2 h-2 rounded-full bg-amber-400" aria-hidden="true"></span>
                     115 學年度・素養導向數位教學共備平台
                 </div>
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight tracking-tight mb-5">
                     新埔國小教學工作坊<br class="sm:hidden">
-                    <span class="text-tealcalm-200">精選課程資源庫</span>
+                    <span class="text-skybrand-700">精選課程資源庫</span>
                 </h1>
-                <p class="text-base sm:text-lg text-navy-100 leading-relaxed mb-8 max-w-2xl mx-auto">
+                <p class="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 max-w-2xl mx-auto">
                     專為國小教育現場量身規劃，彙整十二年國教核心素養教案、完整教學流程大綱與學習評量重點，支援一鍵線上預覽與純文字教案下載。
                 </p>
                 <div class="flex justify-center">
-                    <a href="#curriculum" class="px-7 py-3.5 rounded-xl bg-tealcalm-500 hover:bg-tealcalm-600 text-white font-semibold text-base shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5">
+                    <a href="#curriculum" class="px-7 py-3.5 rounded-xl bg-skybrand-600 hover:bg-skybrand-700 text-white font-semibold text-base shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5">
                         <i class="fa-solid fa-compass" aria-hidden="true"></i>
                         瀏覽領域課程資源
                     </a>
@@ -190,7 +202,7 @@
         <section id="curriculum" class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="curriculum-heading">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
                 <div>
-                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-tealcalm-600 mb-2">
+                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-mint-700 mb-2">
                         <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
                         CURRICULUM REPOSITORY
                     </div>
@@ -204,36 +216,36 @@
 
                 <!-- 領域篩選標籤按鈕群組 -->
                 <div class="flex flex-wrap gap-2" role="group" aria-label="課程領域篩選">
-                    <button type="button" data-filter="all" aria-pressed="true" class="filter-btn active px-4 py-2.5 rounded-xl text-sm font-semibold bg-navy-600 text-white shadow-xs transition-all">
+                    <button type="button" data-filter="all" aria-pressed="true" class="filter-btn active px-4 py-2.5 rounded-xl text-sm font-semibold bg-skybrand-600 text-white shadow-xs transition-all">
                         全部領域
                     </button>
-                    <button type="button" data-filter="chinese" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-mist-200 hover:bg-navy-50 hover:text-navy-700 transition-all">
+                    <button type="button" data-filter="chinese" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-ivory-200 hover:bg-peach-50 hover:text-peach-700 transition-all">
                         國語文
                     </button>
-                    <button type="button" data-filter="math" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-mist-200 hover:bg-navy-50 hover:text-navy-700 transition-all">
+                    <button type="button" data-filter="math" aria-pressed="false" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-ivory-200 hover:bg-skybrand-50 hover:text-skybrand-700 transition-all">
                         數學
                     </button>
                 </div>
             </div>
 
-            <!-- 課程卡片網格（雙欄沉穩專業排版） -->
+            <!-- 課程卡片網格（雙欄明亮親和排版） -->
             <div id="curriculum-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
 
                 <!-- 卡片 1：國語文（五年級） -->
-                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-navy-200 flex flex-col justify-between overflow-hidden group" data-category="chinese">
+                <article class="curriculum-card bg-white rounded-2xl border border-ivory-200 hover:border-peach-200 flex flex-col justify-between overflow-hidden group" data-category="chinese">
                     <div>
-                        <div class="h-1.5 bg-navy-600"></div>
+                        <div class="h-1.5 bg-gradient-to-r from-orange-400 to-amber-400"></div>
                         <div class="p-6 sm:p-7">
                             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-navy-50 text-navy-700 border border-navy-100 inline-flex items-center gap-1.5">
-                                    <i class="fa-solid fa-pen-nib text-navy-500" aria-hidden="true"></i>
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-peach-100 text-peach-700 border border-peach-200 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-pen-nib text-peach-600" aria-hidden="true"></i>
                                     國語文領域
                                 </span>
-                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-ivory-100 text-slate-600 border border-ivory-200">
                                     五年級上學期・4 節課
                                 </span>
                             </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-navy-600 transition-colors leading-snug">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-peach-700 transition-colors leading-snug">
                                 閱讀理解策略：心智圖與關鍵句萃取
                             </h3>
                             <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
@@ -241,8 +253,8 @@
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
-                        <button type="button" data-lesson-id="chinese-1" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-ivory-200 bg-ivory-50">
+                        <button type="button" data-lesson-id="chinese-1" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-skybrand-600 hover:bg-skybrand-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
                             <i class="fa-solid fa-eye" aria-hidden="true"></i>
                             教案預覽與下載
                         </button>
@@ -250,20 +262,20 @@
                 </article>
 
                 <!-- 卡片 2：數學（四年級） -->
-                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-tealcalm-200 flex flex-col justify-between overflow-hidden group" data-category="math">
+                <article class="curriculum-card bg-white rounded-2xl border border-ivory-200 hover:border-skybrand-200 flex flex-col justify-between overflow-hidden group" data-category="math">
                     <div>
-                        <div class="h-1.5 bg-tealcalm-500"></div>
+                        <div class="h-1.5 bg-gradient-to-r from-skybrand-400 to-teal-400"></div>
                         <div class="p-6 sm:p-7">
                             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-tealcalm-50 text-tealcalm-600 border border-tealcalm-100 inline-flex items-center gap-1.5">
-                                    <i class="fa-solid fa-shapes text-tealcalm-500" aria-hidden="true"></i>
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-skybrand-100 text-skybrand-700 border border-skybrand-200 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-shapes text-skybrand-600" aria-hidden="true"></i>
                                     數學領域
                                 </span>
-                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-ivory-100 text-slate-600 border border-ivory-200">
                                     四年級上學期・4 節課
                                 </span>
                             </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-tealcalm-600 transition-colors leading-snug">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-skybrand-700 transition-colors leading-snug">
                                 分數派對大作戰：等值分數與生活應用
                             </h3>
                             <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
@@ -271,8 +283,8 @@
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
-                        <button type="button" data-lesson-id="math-1" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-tealcalm-500 hover:bg-tealcalm-600 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-ivory-200 bg-ivory-50">
+                        <button type="button" data-lesson-id="math-1" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-skybrand-600 hover:bg-skybrand-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
                             <i class="fa-solid fa-eye" aria-hidden="true"></i>
                             教案預覽與下載
                         </button>
@@ -280,20 +292,20 @@
                 </article>
 
                 <!-- 卡片 3：國語文（六年級） -->
-                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-navy-200 flex flex-col justify-between overflow-hidden group" data-category="chinese">
+                <article class="curriculum-card bg-white rounded-2xl border border-ivory-200 hover:border-peach-200 flex flex-col justify-between overflow-hidden group" data-category="chinese">
                     <div>
-                        <div class="h-1.5 bg-navy-600"></div>
+                        <div class="h-1.5 bg-gradient-to-r from-orange-400 to-amber-400"></div>
                         <div class="p-6 sm:p-7">
                             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-navy-50 text-navy-700 border border-navy-100 inline-flex items-center gap-1.5">
-                                    <i class="fa-solid fa-pen-nib text-navy-500" aria-hidden="true"></i>
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-peach-100 text-peach-700 border border-peach-200 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-pen-nib text-peach-600" aria-hidden="true"></i>
                                     國語文領域
                                 </span>
-                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-ivory-100 text-slate-600 border border-ivory-200">
                                     六年級上學期・5 節課
                                 </span>
                             </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-navy-600 transition-colors leading-snug">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-peach-700 transition-colors leading-snug">
                                 思辨寫作工坊：議論文立場與論據建構
                             </h3>
                             <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
@@ -301,8 +313,8 @@
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
-                        <button type="button" data-lesson-id="chinese-2" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-ivory-200 bg-ivory-50">
+                        <button type="button" data-lesson-id="chinese-2" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-skybrand-600 hover:bg-skybrand-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
                             <i class="fa-solid fa-eye" aria-hidden="true"></i>
                             教案預覽與下載
                         </button>
@@ -310,20 +322,20 @@
                 </article>
 
                 <!-- 卡片 4：數學（六年級） -->
-                <article class="curriculum-card bg-white rounded-2xl border border-mist-200 shadow-xs hover:shadow-md hover:border-tealcalm-200 flex flex-col justify-between overflow-hidden group" data-category="math">
+                <article class="curriculum-card bg-white rounded-2xl border border-ivory-200 hover:border-skybrand-200 flex flex-col justify-between overflow-hidden group" data-category="math">
                     <div>
-                        <div class="h-1.5 bg-tealcalm-500"></div>
+                        <div class="h-1.5 bg-gradient-to-r from-skybrand-400 to-teal-400"></div>
                         <div class="p-6 sm:p-7">
                             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-tealcalm-50 text-tealcalm-600 border border-tealcalm-100 inline-flex items-center gap-1.5">
-                                    <i class="fa-solid fa-shapes text-tealcalm-500" aria-hidden="true"></i>
+                                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-skybrand-100 text-skybrand-700 border border-skybrand-200 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-shapes text-skybrand-600" aria-hidden="true"></i>
                                     數學領域
                                 </span>
-                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-mist-100 text-slate-600 border border-mist-200">
+                                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-ivory-100 text-slate-600 border border-ivory-200">
                                     六年級上學期・4 節課
                                 </span>
                             </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-tealcalm-600 transition-colors leading-snug">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 group-hover:text-skybrand-700 transition-colors leading-snug">
                                 圓周率與圓面積探索：幾何切割與推導
                             </h3>
                             <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
@@ -331,8 +343,8 @@
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-mist-100 bg-mist-50/50">
-                        <button type="button" data-lesson-id="math-2" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-tealcalm-500 hover:bg-tealcalm-600 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
+                    <div class="px-6 sm:px-7 pb-6 pt-4 border-t border-ivory-200 bg-ivory-50">
+                        <button type="button" data-lesson-id="math-2" class="open-lesson-btn w-full py-3 px-4 rounded-xl bg-skybrand-600 hover:bg-skybrand-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-xs">
                             <i class="fa-solid fa-eye" aria-hidden="true"></i>
                             教案預覽與下載
                         </button>
@@ -344,37 +356,37 @@
 
     </main>
 
-    <!-- ==================== 4. 簡潔沉穩頁尾 (Footer) ==================== -->
-    <footer class="bg-navy-800 text-navy-200 border-t border-navy-900 py-8">
+    <!-- ==================== 4. 柔和明亮頁尾 (Footer) ==================== -->
+    <footer class="bg-ivory-100 text-slate-600 border-t border-ivory-200 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
-            <div class="flex items-center gap-2.5 text-white font-semibold">
-                <i class="fa-solid fa-book-bookmark text-tealcalm-400" aria-hidden="true"></i>
+            <div class="flex items-center gap-2.5 text-slate-700 font-semibold">
+                <i class="fa-solid fa-book-bookmark text-skybrand-600" aria-hidden="true"></i>
                 <span>&copy; 2026 新埔國小教學工作坊 · 智彬數位教學 | 108 課綱數位教學資源庫</span>
             </div>
-            <a href="#main-content" class="text-navy-200 hover:text-white transition-colors inline-flex items-center gap-1.5 font-medium">
-                <i class="fa-solid fa-arrow-up text-tealcalm-400" aria-hidden="true"></i>
+            <a href="#main-content" class="text-skybrand-700 hover:text-skybrand-600 transition-colors inline-flex items-center gap-1.5 font-semibold">
+                <i class="fa-solid fa-arrow-up text-skybrand-600" aria-hidden="true"></i>
                 回到頁面頂部
             </a>
         </div>
     </footer>
 
     <!-- ==================== 教案預覽與下載互動 Modal 視窗 ==================== -->
-    <div id="lesson-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-900/65 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-mist-200 overflow-hidden flex flex-col max-h-[90vh]">
+    <div id="lesson-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/45 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-ivory-200 overflow-hidden flex flex-col max-h-[90vh]">
             <!-- Modal 頂部標題列 -->
-            <div class="px-6 py-4 bg-navy-700 text-white flex items-center justify-between gap-4">
+            <div class="px-6 py-4 bg-gradient-to-r from-skybrand-600 to-skybrand-500 text-white flex items-center justify-between gap-4">
                 <div class="flex items-center gap-2.5 min-w-0">
-                    <span id="modal-badge" class="shrink-0 px-2.5 py-0.5 rounded-md text-xs font-bold bg-tealcalm-500 text-white">領域標籤</span>
+                    <span id="modal-badge" class="shrink-0 px-2.5 py-0.5 rounded-md text-xs font-bold bg-white text-skybrand-700 shadow-2xs">領域標籤</span>
                     <h3 id="modal-title" class="text-base sm:text-lg font-bold truncate">教案標題</h3>
                 </div>
-                <button type="button" id="close-modal-btn" class="shrink-0 w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="關閉教案預覽視窗">
+                <button type="button" id="close-modal-btn" class="shrink-0 w-9 h-9 rounded-lg bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors" aria-label="關閉教案預覽視窗">
                     <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
                 </button>
             </div>
 
             <!-- Modal 內容滾動區 -->
             <div class="p-6 overflow-y-auto custom-scrollbar space-y-5 text-slate-700">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-mist-100 p-4 rounded-xl border border-mist-200 text-sm">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-ivory-100 p-4 rounded-xl border border-ivory-200 text-sm">
                     <div>
                         <span class="text-slate-500 font-medium">適用年段：</span>
                         <span id="modal-grade" class="font-bold text-slate-800"></span>
@@ -385,41 +397,41 @@
                     </div>
                     <div class="sm:col-span-2">
                         <span class="text-slate-500 font-medium">核心素養指標：</span>
-                        <span id="modal-competency" class="font-semibold text-navy-700"></span>
+                        <span id="modal-competency" class="font-semibold text-skybrand-700"></span>
                     </div>
                 </div>
 
                 <div>
-                    <h4 class="text-sm font-bold text-navy-700 uppercase tracking-wider mb-2.5 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-tealcalm-500" aria-hidden="true"></i>
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2.5 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-skybrand-600" aria-hidden="true"></i>
                         教學活動流程大綱
                     </h4>
-                    <ul id="modal-steps" class="space-y-2.5 text-sm leading-relaxed text-slate-700 bg-white border border-mist-200 rounded-xl p-4">
+                    <ul id="modal-steps" class="space-y-2.5 text-sm leading-relaxed text-slate-700 bg-white border border-ivory-200 rounded-xl p-4">
                         <!-- 由 JavaScript 動態填入 -->
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="text-sm font-bold text-navy-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-clipboard-check text-tealcalm-500" aria-hidden="true"></i>
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check text-mint-600" aria-hidden="true"></i>
                         學習單與評量重點
                     </h4>
-                    <p id="modal-assessment" class="text-sm leading-relaxed text-slate-700 bg-tealcalm-50/70 border border-tealcalm-100 rounded-xl p-4"></p>
+                    <p id="modal-assessment" class="text-sm leading-relaxed text-slate-700 bg-mint-50 border border-mint-100 rounded-xl p-4"></p>
                 </div>
 
                 <!-- 匯出成功提示訊息 -->
-                <div id="download-feedback" class="hidden p-3.5 rounded-xl bg-tealcalm-50 text-tealcalm-600 text-sm font-semibold border border-tealcalm-200 flex items-center gap-2" role="status" aria-live="polite">
-                    <i class="fa-solid fa-circle-check text-tealcalm-500" aria-hidden="true"></i>
+                <div id="download-feedback" class="hidden p-3.5 rounded-xl bg-mint-50 text-mint-700 text-sm font-semibold border border-mint-100 flex items-center gap-2" role="status" aria-live="polite">
+                    <i class="fa-solid fa-circle-check text-mint-600" aria-hidden="true"></i>
                     <span>教案大綱純文字檔（UTF-8）已成功匯出至您的下載資料夾！</span>
                 </div>
             </div>
 
             <!-- Modal 底部按鈕列 -->
-            <div class="px-6 py-4 bg-mist-50 border-t border-mist-200 flex flex-col sm:flex-row justify-end gap-3">
-                <button type="button" id="close-modal-footer-btn" class="px-5 py-2.5 rounded-xl border border-mist-300 bg-white hover:bg-mist-100 text-slate-700 font-semibold text-sm transition-colors">
+            <div class="px-6 py-4 bg-ivory-50 border-t border-ivory-200 flex flex-col sm:flex-row justify-end gap-3">
+                <button type="button" id="close-modal-footer-btn" class="px-5 py-2.5 rounded-xl border border-ivory-300 bg-white hover:bg-ivory-100 text-slate-700 font-semibold text-sm transition-colors">
                     關閉視窗
                 </button>
-                <button type="button" id="download-lesson-btn" class="px-5 py-2.5 rounded-xl bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm shadow-xs transition-colors flex items-center justify-center gap-2">
+                <button type="button" id="download-lesson-btn" class="px-5 py-2.5 rounded-xl bg-skybrand-600 hover:bg-skybrand-700 text-white font-semibold text-sm shadow-xs transition-colors flex items-center justify-center gap-2">
                     <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
                     下載教案大綱 (.txt)
                 </button>
@@ -474,14 +486,14 @@
                         const isSelected = b === btn;
                         b.setAttribute('aria-pressed', String(isSelected));
                         b.classList.toggle('active', isSelected);
-                        b.classList.toggle('bg-navy-600', isSelected);
+                        b.classList.toggle('bg-skybrand-600', isSelected);
                         b.classList.toggle('text-white', isSelected);
                         b.classList.toggle('shadow-xs', isSelected);
 
                         b.classList.toggle('bg-white', !isSelected);
                         b.classList.toggle('text-slate-700', !isSelected);
                         b.classList.toggle('border', !isSelected);
-                        b.classList.toggle('border-mist-200', !isSelected);
+                        b.classList.toggle('border-ivory-200', !isSelected);
                     });
 
                     // 過濾課程卡片
@@ -588,7 +600,7 @@
                 data.steps.forEach((step) => {
                     const li = document.createElement('li');
                     li.className = 'flex items-start gap-2.5';
-                    li.innerHTML = `<i class="fa-solid fa-caret-right text-tealcalm-500 mt-1 shrink-0" aria-hidden="true"></i><span>${step}</span>`;
+                    li.innerHTML = `<i class="fa-solid fa-caret-right text-skybrand-600 mt-1 shrink-0" aria-hidden="true"></i><span>${step}</span>`;
                     stepsList.appendChild(li);
                 });
 
